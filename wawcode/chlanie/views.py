@@ -1,7 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.http import HttpResponse
-
 from django.views.generic import View
 from django.utils import timezone
 from django.urls import reverse_lazy
@@ -58,3 +57,9 @@ class RegisterView(View):
             form.add_error('password_confirm', 'Passwords do not match')
 
         return render(request, self.template_name, {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    context = {}
+    return render(request, 'chlanie/logged_out.html', context)
