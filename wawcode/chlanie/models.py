@@ -66,7 +66,7 @@ class Polubienie(models.Model):
     nick = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(' lubi '.join(self.nick, self.lokal))
+        return f"{self.nick} polubił {self.lokal}"
 
 
 class Wlasciciel(models.Model):
@@ -74,4 +74,4 @@ class Wlasciciel(models.Model):
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(' jest wlascicielem '.join([self.wlasciciel.username, self.lokal.nazwa]))
+        return f"{self.wlasciciel.username} polubił {self.lokal.nazwa}"
