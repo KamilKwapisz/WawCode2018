@@ -17,6 +17,7 @@ def index(request):
 
 
 def profile(request):
+    context = {}
     return render(request, 'chlanie/profile.html', context)
 
 
