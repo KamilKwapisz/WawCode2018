@@ -37,23 +37,23 @@ class Lokal(models.Model):
 
 class Komentarz(models.Model):
     nick = models.ForeignKey(Uzytkownik, on_delete=models.CASCADE)
-    ID_lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
+    lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
     tekst = models.CharField(max_length=100)
     ileGwiazdek = models.IntegerField()
 
 
 class WydarzenieLokalu(models.Model):
-    ID_lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
+    lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
     tytul = models.CharField(max_length=40)
     opis = models.CharField(max_length=100)
     godzinaOd = models.DateTimeField()
 
 
 class Polubienie(models.Model):
-    ID_lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
+    lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
     nick = models.ForeignKey(Uzytkownik, on_delete=models.CASCADE)
 
 
 class Wlasciciel(models.Model):
     wlasciciel = models.OneToOneField(User, on_delete=models.CASCADE)
-    ID_lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
+    lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
