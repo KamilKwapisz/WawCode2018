@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Uzytkownik(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Lokal(models.Model):
 
 
 class Komentarz(models.Model):
-    nick = models.ForeignKey(Uzytkownik, on_delete=models.CASCADE)
+    nick = models.ForeignKey(User, on_delete=models.CASCADE)
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
     tekst = models.CharField(max_length=100)
     ileGwiazdek = models.IntegerField()
@@ -51,7 +51,7 @@ class WydarzenieLokalu(models.Model):
 
 class Polubienie(models.Model):
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
-    nick = models.ForeignKey(Uzytkownik, on_delete=models.CASCADE)
+    nick = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Wlasciciel(models.Model):
