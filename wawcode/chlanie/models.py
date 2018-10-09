@@ -74,5 +74,4 @@ class Wlasciciel(models.Model):
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(' jest wlascicielem '.join([self.wlasciciel.username, self.lokal.nazwa]))
-        return str(' jest wlascicielem '.join([self.wlasciciel.username, self.lokal.nazwa]))
+        return str(' jest wlascicielem '.join([self.wlasciciel.username, self.lokal.nazwa])
