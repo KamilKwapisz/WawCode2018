@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
+from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.views.generic import View
 from django.utils import timezone
@@ -16,7 +17,6 @@ def index(request):
 
 
 def profile(request):
-    context = dict(a="a")
     return render(request, 'chlanie/profile.html', context)
 
 
@@ -63,3 +63,10 @@ def logout_view(request):
     logout(request)
     context = {}
     return render(request, 'chlanie/logged_out.html', context)
+
+
+def login(request, *args, **kwargs):
+    # if request.method == 'POST':
+        # if not request.POST.get('remember_me', None):
+        #     request.session.set_expiry(0)
+    return auth_views.login(request, *args, **kwargs)
