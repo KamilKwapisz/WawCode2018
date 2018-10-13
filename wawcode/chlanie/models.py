@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.urls import reverse
 
 
 class Profile(models.Model):
@@ -42,6 +43,9 @@ class Lokal(models.Model):
 
     def __str__(self):
         return str(self.nazwa)
+
+    def get_absolute_url(self):
+        return reverse('chlanie:lokal-detail', kwargs={'pk': self.id})
 
 
 class Komentarz(models.Model):
