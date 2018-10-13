@@ -1,10 +1,62 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
-</form>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <label for="">Nazwa: </label>
+      <input class="form-control" id="{{ form.nazwa.id_for_label }}" placeholder="Nazwa lokalu" type="text" name="{{ form.nazwa.html_name }}">
+    </div>
+    <div class="form-group">
+      <label for="">Adres: </label>
+      <input class="form-control" id="{{ form.adres.id_for_label }}" placeholder="Adres lokalu" type="text" name="{{ form.adres.html_name }}">
+    </div>
+    <div class="form-group">
+      <label for="">Współrzędne: </label>
+      <input class="form-control" id="{{ form.coordinates.id_for_label }}" placeholder="Podaj współrzędne" type="text" name="{{ form.coordinates.html_name }}">
+    </div>
+    <div class="form-group">
+      <label for="">Cena piwa: </label>
+      <input class="form-control" id="{{ form.cenaPiwa.id_for_label }}" placeholder="Cena piwa" type="text" name="{{ form.cenaPiwa.html_name }}">
+    </div>
+    <div class="form-group">
+      <label for="">Cena wódki: </label>
+      <input class="form-control" id="{{ form.cenaWodki.id_for_label }}" placeholder="Cena wódki" type="text" name="{{ form.cenaWodki.html_name }}">
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.jedzenie.id_for_label }}" name="{{ form.jedzenie.html_name }}"> Czy można zamawiać jedznie? </label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.regionalne.id_for_label }}" name="{{ form.regionalne.html_name }}"> Czy można zamawiać regionalne piwa? </label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.karaoke.id_for_label }}" name="{{ form.karaoke.html_name }}"> Czy odbywa się karaoke? </label>
+    </div>
+    <div class="form-group">
+      <label for="">Godziny otwarcia: </label>
+      <input class="form-control" id="{{ form.godzinyOtwarcia.id_for_label }}" placeholder="Godziny otwarcia (XX:XX - XX:XX)" type="text" name="{{ form.godzinyOtwarcia.html_name }}">
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.palarnia.id_for_label }}" name="{{ form.palarnia.html_name }}"> Czy można palić? </label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.ogrodek.id_for_label }}" name="{{ form.ogrodek.html_name }}"> Czy jest ogródek? </label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.ladowanieTelefonu.id_for_label }}" name="{{ form.ladowanieTelefonu.html_name }}"> Czy można ładować telefon? </label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.parkiet.id_for_label }}" name="{{ form.parkiet.html_name }}"> Czy jest parkiet? </label>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="{{ form.mecze.id_for_label }}" name="{{ form.mecze.html_name }}"> Czy jest możliwość oglądania meczy? </label>
+    </div>
+    <div class="col-md-16 text-center">
+        <button class="btn btn-primary">Submit!</button>
+    </div>
+  </form>
+</div>
 
 {% endblock %}

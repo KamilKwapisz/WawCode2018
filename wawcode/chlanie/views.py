@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
@@ -23,6 +23,11 @@ def index(request):
 def profile(request):
     context = {}
     return render(request, 'chlanie/profile.html', context)
+
+
+def searchtest(request):
+    context = {}
+    return render(request, 'chlanie/searchtest.html', context)
 
 
 class RegisterView(View):
@@ -70,11 +75,23 @@ class LokalDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         lokal = self.get_object()
-        coords = json.loads(lokal.coordinates)
 
-        context = dict(lokal=lokal, coords=coords)
+        info = {
+            "fastfood": lokal.jedzenie,
+            "face": lokal.regionalne,
+            "mic": lokal.karaoke,
+            "smoking_rooms": lokal.palarnia,
+            "weekend": lokal.ogrodek,
+            "battery_charging_full": lokal.ladowanieTelefonu,
+            "music_note": lokal.parkiet,
+            "tv": lokal.mecze
+        }.items()
+
+        context = dict(lokal=lokal, info=info)
 
         return context
+
+
 
 
 class LokalCreateView(CreateView):
@@ -82,8 +99,8 @@ class LokalCreateView(CreateView):
     fields = [
         'nazwa',
         'adres',
-        'cenaPiwa',
         'cenaWodki',
+        'cenaPiwa',
         'jedzenie',
         'regionalne',
         'godzinyOtwarcia',
@@ -93,7 +110,7 @@ class LokalCreateView(CreateView):
         'ladowanieTelefonu',
         'parkiet',
         'mecze',
-        ]
+    ]
 
     def form_valid(self, form):
         if form.is_valid():
@@ -106,10 +123,39 @@ class LokalCreateView(CreateView):
             messages.error("Invalid form")
 
 
+<<<<<<< HEAD
+=======
 def sample_query(request):
     lokale = Lokal.objects.all()
+    user_location = "[52.217719, 20.991137]"
+    radius = 1.0
+    for lokal in lokale:
+        dist = calculate_distance(lokal.coordinates, user_location)
+        print(dist)
+        if dist > radius:
+            lokale = lokale.exclude(id=lokal.pk)
+
+    context = dict(lokale=lokale)
+    return render(request, 'chlanie/lokal_list.html', context)
 
 
+def search_test(request):
+    return render(request, 'chlanie/searchtest.html', {})
+
+
+def get_lokals_list(request):
+    # TODO getting data from AJAX
+    data = request.GET
+    # data = {
+    #     'cenaPiwa': 3.5,
+    #     'cenaWodki': 6.0,
+    #     'jedzenie': True,
+    # }
+    data2 = {k:v for k,v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    lokale = Lokal.objects.filter(**data2)
+    lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'], cenaWodki__lte=data['cenaWodki'])
+    return JsonResponse(lokale[0].nazwa)
+>>>>>>> 1872a9e86460cc7aceb6498b111bed01853104c7
 
 def logout_view(request):
     logout(request)
@@ -119,6 +165,6 @@ def logout_view(request):
 
 def login(request, *args, **kwargs):
     # if request.method == 'POST':
-        # if not request.POST.get('remember_me', None):
-        #     request.session.set_expiry(0)
+    # if not request.POST.get('remember_me', None):
+    #     request.session.set_expiry(0)
     return auth_views.login(request, *args, **kwargs)
