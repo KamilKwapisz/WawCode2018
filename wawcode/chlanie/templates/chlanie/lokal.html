@@ -1,36 +1,71 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <h1>
-            <strong>{{ lokal.nazwa }}</strong>
-            <br/>
-            <small class="text-muted">{{ lokal.adres }}</small>
-        </h1>
-    </div>
+    <div class="container">
+        <div class="row">
+            <h1>
+                <strong>{{ lokal.nazwa }}</strong>
+                <br/>
+                <small class="text-muted">{{ lokal.adres }}</small>
+            </h1>
+        </div>
 
-    <!-- icons -->
-    <div class="row">
-        {% for key, value in info %}
-            {% if value == True %}
-                <i class="material-icons">{{ key }}</i>
+        <!-- icons -->
+        <div class="row">
+            {% for key, value in info %}
+                {% if value == True %}
+                    <i class="material-icons">{{ key }}</i>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <table>
+                <tr>
+                    <td class="text-primary">Cena wódki:</td>
+                    <td>{{ lokal.cenaWodki }}</td>
+                </tr>
+                <tr>
+                    <td class="text-primary">Cena piwa:</td>
+                    <td>{{ lokal.cenaPiwa }}</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="row">
+            Komentarze: </br>
+            {% if comments %}
+                <ul>
+                    {% for comment in comments %}
+                        <li><span class="text-primary font-weight-bold">
+                {{ comment.author }}: </span>
+                            {{ comment.text }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                brak
             {% endif %}
-        {% endfor %}
+            Dodaj komentarz:
+            <input id="newComment" type="text"/>
+            <a id="send"><i class="material-icons">send</i></a>
+            <script>
+                $("#send").click((ev) => {
+                    ev.preventDefault();
+                    $.ajax({
+                        type: "GET",
+                        url: '{% url "chlanie:lokale" %}',
+                        data: $("#newComment").innerText,
+                        success: (data) => {
+                            console.log("udalo sie!");
+                            console.log(data);
+
+                        }
+                    });
+                });
+            </script>
+
+        </div>
     </div>
-
-<div class="row">
-    <table>
-        <tr>
-            <td class="text-primary">Cena wódki:</td>
-            <td>{{ lokal.cenaWodki}}</td>
-        </tr>
-        <tr>
-            <td class="text-primary">Cena piwa:</td>
-            <td>{{ lokal.cenaPiwa }}</td>
-        </tr>
-    </table>
-</div>
-</div>
-
 {% endblock %}

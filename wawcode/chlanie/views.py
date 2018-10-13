@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
@@ -11,7 +12,7 @@ from django.views.decorators.debug import sensitive_variables, sensitive_post_pa
 from django.utils.decorators import method_decorator
 import json
 
-from .models import Lokal
+from .models import Lokal, Comment
 from .forms import UserForm
 from .utils import *
 
@@ -87,7 +88,9 @@ class LokalDetailView(DetailView):
             "tv": lokal.mecze
         }.items()
 
-        context = dict(lokal=lokal, info=info)
+        comments = Comment.objects.filter(lokal=lokal.id)
+
+        context = dict(lokal=lokal, info=info, comments=comments)
 
         return context
 
@@ -117,14 +120,11 @@ class LokalCreateView(CreateView):
 
             lokal = form.save(commit=False)
             # TODO validating adress string
-            lokal.coordinates = adress_to_coordinates(lokal.adres)
+            lokal.coordinates = address_to_coordinates(lokal.adres)
             return super(LokalCreateView, self).form_valid(form)
         else:
             messages.error("Invalid form")
 
-
-<<<<<<< HEAD
-=======
 def sample_query(request):
     lokale = Lokal.objects.all()
     user_location = "[52.217719, 20.991137]"
@@ -144,18 +144,24 @@ def search_test(request):
 
 
 def get_lokals_list(request):
-    # TODO getting data from AJAX
-    data = request.GET
-    # data = {
-    #     'cenaPiwa': 3.5,
-    #     'cenaWodki': 6.0,
-    #     'jedzenie': True,
-    # }
-    data2 = {k:v for k,v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
-    lokale = Lokal.objects.filter(**data2)
-    lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'], cenaWodki__lte=data['cenaWodki'])
-    return JsonResponse(lokale[0].nazwa)
->>>>>>> 1872a9e86460cc7aceb6498b111bed01853104c7
+    data = request.GET.dict()
+    for key, value in data.items():
+        if value == 'true':
+            data[key] = True
+        elif value == 'false':
+            data[key] = False
+    print(data)
+    data_without_prices = {k: v for k, v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    lokale = Lokal.objects.filter(**data_without_prices)
+    if 'cenaPiwa' in data.keys():
+        lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'])
+    if 'cenaWodki' in data.keys():
+        lokale = lokale.filter(cenaWodki__lte=data['cenaWodki'])
+
+    print(lokale)
+    json_data = serializers.serialize('json', list(lokale))
+    return JsonResponse(json_data, safe=False)
+
 
 def logout_view(request):
     logout(request)

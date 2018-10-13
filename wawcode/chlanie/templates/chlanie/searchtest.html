@@ -1,22 +1,25 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
-    <form class="form-inline md-form form-sm">
-        <input id="mainSearch" class="form-control form-control-sm mr-3 w-75" type="text"
-               placeholder="Search" aria-label="Szukaj">
-        <a><i id="searchButton" class="material-icons">search</i></a>
-    </form>
-    <br/>
-    <h1 id="test">TEXT</h1>
+<form class="form-inline md-form form-sm">
+    <input id="mainSearch" class="form-control form-control-sm mr-3 w-75" type="text"
+           placeholder="Search" aria-label="Szukaj">
+    <a><i id="searchButton" class="material-icons">search</i></a>
+</form>
+<br/>
+<h1 id="test">TEXT</h1>
 
-    <script type="text/javascript">
-        var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0]);
+<script type="text/javascript">
+        <!--var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0]);-->
+        var searchData = {
+            'karaoke': true,
+            'cenaPiwa': 5.0
+        };
         $("#searchButton").click( function(ev){
-            console.log("klik");
             ev.preventDefault();
             $.ajax({
                 type: "GET",
                 url: '{% url "chlanie:lokale" %}',
-                data: JSON.stringify(searchData),
+                data: searchData,
                 success: (data) => {
                     //TODO: ogarnac dane
                     console.log(data);
@@ -25,6 +28,7 @@
                 }
             });
         });
-    </script>
+
+</script>
 
 {% endblock body %}
