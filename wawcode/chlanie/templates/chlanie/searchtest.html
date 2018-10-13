@@ -10,7 +10,7 @@
 
     <script type="text/javascript">
         window.onload = () => {
-            searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0])
+            var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0])
             $("#searchButton").click = (ev) => {
                 ev.preventDefault();
                 $.ajax({
