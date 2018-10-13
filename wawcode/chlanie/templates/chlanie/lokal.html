@@ -48,8 +48,23 @@
                 brak
             {% endif %}
             Dodaj komentarz:
-            <input type="text"/>
-        <a><i class="material-icons">send</i></a>
+            <input id="newComment" type="text"/>
+            <a id="send"><i class="material-icons">send</i></a>
+            <script>
+                $("#send").click((ev) => {
+                    ev.preventDefault();
+                    $.ajax({
+                        type: "GET",
+                        url: '{% url "chlanie:lokale" %}',
+                        data: $("#newComment").innerText,
+                        success: (data) => {
+                            console.log("udalo sie!");
+                            console.log(data);
+
+                        }
+                    });
+                });
+            </script>
 
         </div>
     </div>
