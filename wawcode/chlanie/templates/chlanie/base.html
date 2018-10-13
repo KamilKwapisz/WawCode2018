@@ -11,7 +11,11 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- Latest compiled and minified JavaScript -->
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
 <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
+<link href="{% static 'chlanie/multiple-select.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -49,9 +53,103 @@
       .row.content {height:auto;}
     }
   </style>
+=======
+<!--<script src="{% static 'chlanie/js/bootstrap.min.js' %}"></script>-->
+>>>>>>> a8b3e7de950ff8991f3452b80e75db2dc8aded37
+<link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<style>
+<<<<<<< HEAD
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+  </style>
 </head>
 
 <body>
+=======
+	#menu
+	{
+		background-color: #0c224a;
+	}
+	#menu #logo
+	{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#menu ul li
+	{
+		display: inline-block;
+	}
+	#footer
+	{
+		position: absolute;
+		bottom: 0;
+		height: 20%;
+		background-color: #0c224a;
+	}
+	.footercontent
+	{
+		width: 50%;
+		display: inline-block;
+	}
+</style>
+>>>>>>> 1872a9e86460cc7aceb6498b111bed01853104c7
+</head>
+
+<body>
+<<<<<<< HEAD
+{% block body 
+	<div id="menu">
+		<div id="logo">
+		
+		</div>
+		<ul>
+			<li>
+				<datalist id="cities">
+					<option value="Warszawa">
+					<option value="Kraków">
+				</datalist>
+			</li>
+			<li><a href=""/>Zaloguj się</a></li>
+			<li><a href=""/>Zarejestruj się</a></li>
+		</ul>
+	</div>
+=======
+<<<<<<< HEAD
+>>>>>>> a8b3e7de950ff8991f3452b80e75db2dc8aded37
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -64,7 +162,14 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
+<<<<<<< HEAD
           <li class="active"><a href="/lokal/dodaj">Dodaj lokal</a></li>
+=======
+          <li class="active"><a href="gothere">Home</a></li>
+          <li><a href="gothere">About</a></li>
+          <li><a href="gothere">Projects</a></li>
+          <li><a href="gothere">Contact</a></li>
+>>>>>>> a8b3e7de950ff8991f3452b80e75db2dc8aded37
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -73,7 +178,23 @@
     </div>
   </nav>
   <br>
+<<<<<<< HEAD
 {% block body %}
+=======
+{% block body %}
+=======
+{% block body %}
+>>>>>>> a8bb9aa97ffa98427123440ef43fa37ba4840c5b
+	<div id="footer">
+		<div class="footercontent">
+			<img src=""/>
+		</div>
+		<div class="footercontent">
+			<h2>Kontakt</h2>
+		</div>
+	</div>
+>>>>>>> 1872a9e86460cc7aceb6498b111bed01853104c7
+>>>>>>> a8b3e7de950ff8991f3452b80e75db2dc8aded37
 {% endblock %}
   </br>
 </body>
