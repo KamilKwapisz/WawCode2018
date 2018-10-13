@@ -54,7 +54,7 @@ class Rate(models.Model):
     rating = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
 
     def __str__(self):
-        return f"{user} ocenił lokal {lokal.nazwa} na {rating} gwiazdek"
+        return f"{self.user} ocenił lokal {self.lokal.nazwa} na {self.rating} gwiazdek"
 
 
 class Comment(models.Model):
@@ -82,12 +82,18 @@ class WydarzenieLokalu(models.Model):
         return str(self.tytul)
 
 
-class Polubienie(models.Model):
+class Like(models.Model):
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
-    nick = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(editable=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.nick} polubił {self.lokal}"
+        return f"{self.user} polubił {self.lokal}"
 
 
 class Wlasciciel(models.Model):

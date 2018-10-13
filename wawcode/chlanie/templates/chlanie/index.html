@@ -8,6 +8,7 @@
         position: relative;
 		width: 100%;  /* The width is the width of the web page */
        }
+<<<<<<< HEAD
 		
 		#formularz-na-mapie
 		{
@@ -22,6 +23,23 @@
 			padding: 20px;
 		}
 
+=======
+		#footer
+		{
+			width: 100%;
+			color: white;
+			background-color: #0c224a;
+		}
+		#footer ul li
+		{
+			width: 12%;
+			display: inline-block;
+		}
+		#footer ul li:first-of-type
+		{
+			margin-left: 50%;
+		}
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a
 		* {
 			margin: 0;
 			padding: 0;
@@ -31,6 +49,7 @@
 			vertical-align: baseline;
 			background: transparent;
 		}
+<<<<<<< HEAD
 		
 		.container-burger {
 			text-align: center;
@@ -118,10 +137,18 @@
 				</div>
 			</form>
 		</div>
+=======
+  </style>
+{% endblock %}
+
+  {% block body %}
+    <div id="map"></div>
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a
   {% endblock %}
 
     {% block script %}
      <script>
+<<<<<<< HEAD
 	 var gowno = false;
 	function rozwin(x) {
 		x.classList.toggle("change");
@@ -137,6 +164,8 @@
 		}
 	}
 	
+=======
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a
       var map, infoWindow;
       function initMap() {
 	  var styledMapType = new google.maps.StyledMapType(
@@ -277,12 +306,21 @@
             };
             map.setCenter(pos);
           });
+<<<<<<< HEAD
 
         } 
       }
 
+=======
+        }
+      }
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVC9t1ndZRzTd5H25Dbj7gYhy10SnBOeQ&callback=initMap">
     </script>
+<<<<<<< HEAD
 {% endblock %}
+=======
+{% endblock %}
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a

@@ -4,7 +4,6 @@ from .models import Comment
 
 
 class UserForm(ModelForm):
-
     password = CharField(widget=PasswordInput)
     password_confirm = CharField(widget=PasswordInput())
 
@@ -14,7 +13,6 @@ class UserForm(ModelForm):
 
 
 class CommentForm(ModelForm):
-
     class Meta:
         model = Comment
         fields = ['text']
