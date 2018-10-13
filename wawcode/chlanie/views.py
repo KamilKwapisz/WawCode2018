@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
@@ -142,17 +143,24 @@ def search_test(request):
 
 
 def get_lokals_list(request):
-    # TODO getting data from AJAX
-    data = request.GET.get('dane', None)
-    # data = {
-    #     'cenaPiwa': 3.5,
-    #     'cenaWodki': 6.0,
-    #     'jedzenie': True,
-    # }
-    data2 = {k:v for k,v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
-    lokale = Lokal.objects.filter(**data2)
-    lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'], cenaWodki__lte=data['cenaWodki'])
-    return JsonResponse(lokale[0].nazwa)
+    data = request.GET.dict()
+    for key, value in data.items():
+        if value == 'true':
+            data[key] = True
+        elif value == 'false':
+            data[key] = False
+    print(data)
+    data_without_prices = {k: v for k, v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    lokale = Lokal.objects.filter(**data_without_prices)
+    if 'cenaPiwa' in data.keys():
+        lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'])
+    if 'cenaWodki' in data.keys():
+        lokale = lokale.filter(cenaWodki__lte=data['cenaWodki'])
+
+    print(lokale)
+    json_data = serializers.serialize('json', list(lokale))
+    return JsonResponse(json_data, safe=False)
+
 
 def logout_view(request):
     logout(request)

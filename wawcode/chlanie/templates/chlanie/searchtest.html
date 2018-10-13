@@ -9,22 +9,25 @@
     <h1 id="test">TEXT</h1>
 
     <script type="text/javascript">
-        window.onload = () => {
-            var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0]);
-            $("#searchButton").click = (ev) => {
-                ev.preventDefault();
-                $.ajax({
-                    type: "GET",
-                    url: '{% url "chlanie:lokale" %}',
-                    data: {'dane': JSON.stringify(searchData)},
-                    success: (data) => {
-                        //TODO: ogarnac dane
-                        console.log(data);
-                    }
-                })
+        <!--var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0]);-->
+        var searchData = {
+            'karaoke': true,
+            'cenaPiwa': 5.0
+        };
+        $("#searchButton").click( function(ev){
+            ev.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: '{% url "chlanie:lokale" %}',
+                data: searchData,
+                success: (data) => {
+                    //TODO: ogarnac dane
+                    console.log(data);
+                    data = JSON.parse(data);
 
-            }
-        }
+                }
+            });
+        });
     </script>
 
 {% endblock body %}
