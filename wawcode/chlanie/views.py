@@ -12,8 +12,8 @@ from django.views.decorators.debug import sensitive_variables, sensitive_post_pa
 from django.utils.decorators import method_decorator
 import json
 
-from .models import Lokal, Comment
-from .forms import UserForm
+from .models import Lokal, Comment, Rate
+from .forms import UserForm, CommentForm
 from .utils import *
 
 
@@ -70,31 +70,48 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class LokalDetailView(DetailView):
-    model = Lokal
-    template_name = "chlanie/lokal.html"
+def lokal_detail_view(request, pk):
+    lokal = Lokal.objects.get(pk=pk)
 
-    def get_context_data(self, **kwargs):
-        lokal = self.get_object()
+    info = {
+        "fastfood": lokal.jedzenie,
+        "face": lokal.regionalne,
+        "mic": lokal.karaoke,
+        "smoking_rooms": lokal.palarnia,
+        "weekend": lokal.ogrodek,
+        "battery_charging_full": lokal.ladowanieTelefonu,
+        "music_note": lokal.parkiet,
+        "tv": lokal.mecze
+    }.items()
 
-        info = {
-            "fastfood": lokal.jedzenie,
-            "face": lokal.regionalne,
-            "mic": lokal.karaoke,
-            "smoking_rooms": lokal.palarnia,
-            "weekend": lokal.ogrodek,
-            "battery_charging_full": lokal.ladowanieTelefonu,
-            "music_note": lokal.parkiet,
-            "tv": lokal.mecze
-        }.items()
+    comments = Comment.objects.filter(lokal=lokal.id)
 
-        comments = Comment.objects.filter(lokal=lokal.id)
+    rates = Rate.objects.filter(lokal=lokal.id)
+    rating = 0.0
+    for rate in rates:
+        rating += rate.rating
+    try:
+        rating /= rates.count()
+    except ZeroDivisionError:
+        rating = None
 
-        context = dict(lokal=lokal, info=info, comments=comments)
+    context = dict(lokal=lokal, info=info, comments=comments)
+    context['rating'] = rating
 
-        return context
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.lokal = lokal
+            comment.author = request.user
+            comment.save()
+        else:
+            messages.error(request, 'Please correct errors above.')
+    else:
+        form = CommentForm(request.POST)
+    context['form'] = form
 
-
+    return render(request, "chlanie/lokal.html", context)
 
 
 class LokalCreateView(CreateView):
@@ -124,6 +141,7 @@ class LokalCreateView(CreateView):
             return super(LokalCreateView, self).form_valid(form)
         else:
             messages.error("Invalid form")
+
 
 def sample_query(request):
     lokale = Lokal.objects.all()
