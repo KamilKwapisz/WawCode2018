@@ -1,7 +1,7 @@
 import json
 
 from geopy.geocoders import Nominatim
-import geopy.distance
+from geopy.distance import great_circle
 
 
 def adress_to_coordinates(adress: str):
@@ -12,6 +12,8 @@ def adress_to_coordinates(adress: str):
 
 
 def calculate_distance(coordinates1, coordinates2):
+    print(coordinates1)
+    print(coordinates2)
     coordinates1 = tuple(json.loads(coordinates1))
     coordinates2 = tuple(json.loads(coordinates2))
-    return geopy.distance.vincenty(coordinates1, coordinates2).km
+    return great_circle(coordinates1, coordinates2).km
