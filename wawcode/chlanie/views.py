@@ -72,11 +72,20 @@ class LokalDetailView(DetailView):
         lokal = self.get_object()
         coords = json.loads(lokal.coordinates)
 
-        context = dict(lokal=lokal, coords=coords)
+        info = {
+            "fastfood":self.jedzenie,
+            "face":self.regionalne,
+            "keyboard_voice":self.karaoke,
+            "smoking_rooms":self.palarnia,
+            "weekend":self.ogrodek,
+            "battery_charged_full":self.ladowanieTelefonu,
+            "music_note":self.parkiet,
+            "tv":self.mecze
+        }.items()
+
+        context = dict(lokal=lokal, coords=coords, info=info)
 
         return context
-
-
 
 
 class LokalCreateView(CreateView):
@@ -106,7 +115,6 @@ class LokalCreateView(CreateView):
             return super(LokalCreateView, self).form_valid(form)
         else:
             messages.error("Invalid form")
-
 
 
 def logout_view(request):

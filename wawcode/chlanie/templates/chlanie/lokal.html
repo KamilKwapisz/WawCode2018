@@ -1,8 +1,23 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
 
-Nazwa: {{lokal.nazwa}}</br>
-Adres: {{lokal.adres}}</br>
-coordinates: {{coords}}</br>
+<div class="container">
+    <div class="row">
+        <h1>{{ lokal.nazwa }}</h1>
+    </div>
+
+    <div class="row">
+        <h2>{{ lokal.adres }}</h2>
+    </div>
+
+    <!-- icons -->
+    <div class="row">
+        {% for key, value in info %}
+            {% if value == True %}
+                <i class="material-icons">key</i>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}
