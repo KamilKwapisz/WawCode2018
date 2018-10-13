@@ -77,13 +77,15 @@ class LokalDetailView(DetailView):
         return context
 
 
+
+
 class LokalCreateView(CreateView):
     model = Lokal
     fields = [
         'nazwa',
         'adres',
-        'cenaPiwa',
         'cenaWodki',
+        'cenaPiwa',
         'jedzenie',
         'regionalne',
         'godzinyOtwarcia',
@@ -104,10 +106,6 @@ class LokalCreateView(CreateView):
             return super(LokalCreateView, self).form_valid(form)
         else:
             messages.error("Invalid form")
-
-
-def sample_query(request):
-    lokale = Lokal.objects.all()
 
 
 
