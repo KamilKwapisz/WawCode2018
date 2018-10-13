@@ -12,7 +12,7 @@ from django.views.decorators.debug import sensitive_variables, sensitive_post_pa
 from django.utils.decorators import method_decorator
 import json
 
-from .models import Lokal, Comment, Rate
+from .models import Lokal, Comment, Rate, Like
 from .forms import UserForm, CommentForm
 from .utils import *
 
@@ -31,47 +31,9 @@ def searchtest(request):
     return render(request, 'chlanie/searchtest.html', context)
 
 
-class RegisterView(View):
-    form_class = UserForm
-    template_name = "registration/registration.html"
-
-    # display blank form
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
-
-    # process form data
-    @method_decorator(sensitive_variables())
-    @method_decorator(sensitive_post_parameters())
-    def post(self, request):
-        form = self.form_class(request.POST)
-
-        if form.is_valid() and form.cleaned_data['password'] == form.cleaned_data['password_confirm']:
-            user = form.save(commit=False)
-
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user.email = username
-            user.set_password(password)
-            user.save()
-
-            # returns user object if credentials are OK
-            user = authenticate(username=username, password=password)
-            print(user)
-
-            if user is not None:
-                messages.success(self.request, "User {} has been created!".format(username))
-            else:
-                messages.error(self.request, "Invalid email or password")
-
-        elif form.data['password'] != form.data['password_confirm']:
-            form.add_error('password_confirm', 'Passwords do not match')
-
-        return render(request, self.template_name, {'form': form})
-
-
 def lokal_detail_view(request, pk):
     lokal = Lokal.objects.get(pk=pk)
+    user = request.user
 
     info = {
         "fastfood": lokal.jedzenie,
@@ -98,12 +60,15 @@ def lokal_detail_view(request, pk):
     context = dict(lokal=lokal, info=info, comments=comments)
     context['rating'] = rating
 
+    if Like.objects.filter(user=user, lokal=lokal).count() == 1:
+        context['liked'] = True
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.lokal = lokal
-            comment.author = request.user
+            comment.author = user
             comment.save()
         else:
             messages.error(request, 'Please correct errors above.')
@@ -192,3 +157,42 @@ def login(request, *args, **kwargs):
     # if not request.POST.get('remember_me', None):
     #     request.session.set_expiry(0)
     return auth_views.login(request, *args, **kwargs)
+
+
+class RegisterView(View):
+    form_class = UserForm
+    template_name = "registration/registration.html"
+
+    # display blank form
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    # process form data
+    @method_decorator(sensitive_variables())
+    @method_decorator(sensitive_post_parameters())
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid() and form.cleaned_data['password'] == form.cleaned_data['password_confirm']:
+            user = form.save(commit=False)
+
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.email = username
+            user.set_password(password)
+            user.save()
+
+            # returns user object if credentials are OK
+            user = authenticate(username=username, password=password)
+            print(user)
+
+            if user is not None:
+                messages.success(self.request, "User {} has been created!".format(username))
+            else:
+                messages.error(self.request, "Invalid email or password")
+
+        elif form.data['password'] != form.data['password_confirm']:
+            form.add_error('password_confirm', 'Passwords do not match')
+
+        return render(request, self.template_name, {'form': form})

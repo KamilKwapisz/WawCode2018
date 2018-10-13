@@ -4,11 +4,21 @@
 <div class="container">
     <div class="row">
         <h1>
-            <strong>{{ lokal.nazwa }}</strong>
+            <strong>{{ lokal.nazwa }}</strong> ({{rating}})
             <br/>
             <small class="text-muted">{{ lokal.adres }}</small>
         </h1>
     </div>
+    {% if not liked %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="col-md-16">
+            <button class="btn btn-primary">Like!</button>
+        </div>
+    </form>
+    {% else %}
+    <strong class="badge badge-success">Liked</strong>
+    {% endif %}
 
     <!-- icons -->
     <div class="row">
