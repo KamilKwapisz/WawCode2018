@@ -77,8 +77,6 @@ class LokalDetailView(DetailView):
         return context
 
 
-
-
 class LokalCreateView(CreateView):
     model = Lokal
     fields = [
