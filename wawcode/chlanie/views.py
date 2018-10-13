@@ -25,6 +25,11 @@ def profile(request):
     return render(request, 'chlanie/profile.html', context)
 
 
+def searchtest(request):
+    context = {}
+    return render(request, 'chlanie/searchtest.html', context)
+
+
 class RegisterView(View):
     form_class = UserForm
     template_name = "registration/registration.html"
@@ -72,14 +77,14 @@ class LokalDetailView(DetailView):
         lokal = self.get_object()
 
         info = {
-            "fastfood":lokal.jedzenie,
-            "face":lokal.regionalne,
-            "mic":lokal.karaoke,
-            "smoking_rooms":lokal.palarnia,
-            "weekend":lokal.ogrodek,
-            "battery_charging_full":lokal.ladowanieTelefonu,
-            "music_note":lokal.parkiet,
-            "tv":lokal.mecze
+            "fastfood": lokal.jedzenie,
+            "face": lokal.regionalne,
+            "mic": lokal.karaoke,
+            "smoking_rooms": lokal.palarnia,
+            "weekend": lokal.ogrodek,
+            "battery_charging_full": lokal.ladowanieTelefonu,
+            "music_note": lokal.parkiet,
+            "tv": lokal.mecze
         }.items()
 
         context = dict(lokal=lokal, info=info)
@@ -103,7 +108,7 @@ class LokalCreateView(CreateView):
         'ladowanieTelefonu',
         'parkiet',
         'mecze',
-        ]
+    ]
 
     def form_valid(self, form):
         if form.is_valid():
@@ -120,7 +125,6 @@ def sample_query(request):
     lokale = Lokal.objects.all()
 
 
-
 def logout_view(request):
     logout(request)
     context = {}
@@ -129,6 +133,6 @@ def logout_view(request):
 
 def login(request, *args, **kwargs):
     # if request.method == 'POST':
-        # if not request.POST.get('remember_me', None):
-        #     request.session.set_expiry(0)
+    # if not request.POST.get('remember_me', None):
+    #     request.session.set_expiry(0)
     return auth_views.login(request, *args, **kwargs)
