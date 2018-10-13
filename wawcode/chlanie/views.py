@@ -2,6 +2,7 @@ from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import View, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -48,17 +49,22 @@ def lokal_detail_view(request, pk):
 
     comments = Comment.objects.filter(lokal=lokal.id)
 
+    was_rated = False
+    if Rate.objects.filter(user=user, lokal=lokal):
+        was_rated = True
     rates = Rate.objects.filter(lokal=lokal.id)
     rating = 0.0
     for rate in rates:
         rating += rate.rating
     try:
         rating /= rates.count()
+        rating = float("%.2f" % rating)
     except ZeroDivisionError:
-        rating = None
+        rating = 0
 
     context = dict(lokal=lokal, info=info, comments=comments)
     context['rating'] = rating
+    context['was_rated'] = was_rated
 
     if Like.objects.filter(user=user, lokal=lokal).count() == 1:
         context['liked'] = True
@@ -133,6 +139,27 @@ def get_lokals_list(request):
     print(lokale)
     json_data = serializers.serialize('json', list(lokale))
     return JsonResponse(json_data, safe=False)
+
+
+def rate(request):
+    data = request.GET.dict()
+    rating = int(data['ocena'])
+    lokal_id = data['idLokalu']
+    username = data['username']
+    user = User.objects.get(username=username)
+    lokal = Lokal.objects.get(id=lokal_id)
+    rate_query = Rate.objects.filter(user=user, lokal=lokal)
+    if rate_query.count() == 1:
+        old_rate = Rate.objects.get(user=user, lokal=lokal)
+        if old_rate.rating == rating:
+            old_rate.rating = 0
+        else:
+            old_rate.rating = rating
+        old_rate.save()
+
+    else:
+        Rate.objects.create(user=user, lokal=lokal, rating=rating)
+    return JsonResponse(True, safe=False)
 
 
 def logout_view(request):

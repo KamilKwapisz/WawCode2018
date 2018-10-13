@@ -45,21 +45,23 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
+                    <div class="col">({{rating}})</div>
+
                     <script type="text/javascript">
                         var username = "{{ request.user.username }}";
                         let options = {
                             theme: 'bootstrap-stars',
-                            initialRating: 0,
+                            initialRating: {{rating}},
                             onSelect: function (value, text, event) {
                                 if (typeof(event) !== 'undefined') {
                                     $.ajax({
                                         type: "GET",
-                                        url: '{% url "chlanie:lokale" %}',
-                                        data: JSON.stringify({
+                                        url: '{% url "chlanie:rating" %}',
+                                        data: {
                                             'username': username,
-                                            'idLokalu': lokal.id,
+                                            'idLokalu': {{lokal.id}},
                                             'ocena': value
-                                        })
+                                        }
                                     })
                                 } else console.log("dziwne")
                             }

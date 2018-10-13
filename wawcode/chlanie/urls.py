@@ -15,4 +15,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
 
     path('ajax/lokale', views.get_lokals_list, name='lokale'),
+    path('ajax/rating', views.rate, name='rating'),
 ]

@@ -52,6 +52,12 @@ class Rate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    created = models.DateTimeField(editable=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Rate, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user} ocenił lokal {self.lokal.nazwa} na {self.rating} gwiazdek"
