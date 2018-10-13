@@ -10,12 +10,12 @@
 
     <script type="text/javascript">
         window.onload = () => {
-            var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0])
+            var searchData = new Map().set(["karaoke", true], ["cenaPiwa", 5.0]);
             $("#searchButton").click = (ev) => {
                 ev.preventDefault();
                 $.ajax({
                     type: "GET",
-                    url: '{% url  "PLACEHOLDER" %}',
+                    url: '{% url "chlanie:lokale" %}',
                     data: JSON.stringify(searchData),
                     success: (data) => {
                         //TODO: ogarnac dane

@@ -9,6 +9,7 @@ urlpatterns = [
     path('lokal/dodaj', views.LokalCreateView.as_view(), name='lokal-create'),
     path('lokal/<int:pk>', views.LokalDetailView.as_view(), name='lokal-detail'),
     path('test/', views.sample_query, name='test'),
+    path('search/', views.search_test, name='search'),
     path('profile/', views.profile, name='profile'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', auth_views.LoginView.as_view(), name='login'),

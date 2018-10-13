@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
@@ -135,16 +135,22 @@ def sample_query(request):
     return render(request, 'chlanie/lokal_list.html', context)
 
 
+def search_test(request):
+    return render(request, 'chlanie/searchtest.html', {})
+
+
 def get_lokals_list(request):
     # TODO getting data from AJAX
-    data = {
-        'cenaPiwa': 3.5,
-        'cenaWodki': 6.0,
-        'jedzenie': True,
-    }
-    data2 = {k:v for k,v in d.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    data = request.GET
+    # data = {
+    #     'cenaPiwa': 3.5,
+    #     'cenaWodki': 6.0,
+    #     'jedzenie': True,
+    # }
+    data2 = {k:v for k,v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
     lokale = Lokal.objects.filter(**data2)
     lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'], cenaWodki__lte=data['cenaWodki'])
+    return JsonResponse(lokale[0].nazwa)
 
 def logout_view(request):
     logout(request)

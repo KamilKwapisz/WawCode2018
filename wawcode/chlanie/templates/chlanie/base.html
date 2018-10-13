@@ -14,7 +14,6 @@
 <!-- Latest compiled and minified JavaScript -->
 <!--<script src="{% static 'chlanie/js/bootstrap.min.js' %}"></script>-->
 <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
-<link href="{% static 'chlanie/multiple-select.css' %}" rel="stylesheet">
 <style>
 	#footer
 	{
@@ -42,13 +41,9 @@
 </body>
 
 {% block script %}
-<script src="{% static 'chlanie/multiple-select.js' %}"></script>
 <script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'chlanie/js/mdb.min.js' %}"></script>
 <script src="{% static 'chlanie/js/popper.min.js' %}"></script>
-<script>
-        $('select').multipleSelect();
-</script>
 
 {% endblock %}
 </html>
