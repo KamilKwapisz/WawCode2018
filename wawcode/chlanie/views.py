@@ -123,7 +123,28 @@ class LokalCreateView(CreateView):
 
 def sample_query(request):
     lokale = Lokal.objects.all()
+    user_location = "[52.217719, 20.991137]"
+    radius = 1.0
+    for lokal in lokale:
+        dist = calculate_distance(lokal.coordinates, user_location)
+        print(dist)
+        if dist > radius:
+            lokale = lokale.exclude(id=lokal.pk)
 
+    context = dict(lokale=lokale)
+    return render(request, 'chlanie/lokal_list.html', context)
+
+
+def get_lokals_list(request):
+    # TODO getting data from AJAX
+    data = {
+        'cenaPiwa': 3.5,
+        'cenaWodki': 6.0,
+        'jedzenie': True,
+    }
+    data2 = {k:v for k,v in d.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    lokale = Lokal.objects.filter(**data2)
+    lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'], cenaWodki__lte=data['cenaWodki'])
 
 def logout_view(request):
     logout(request)
