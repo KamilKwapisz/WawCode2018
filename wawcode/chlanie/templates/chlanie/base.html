@@ -11,9 +11,29 @@
 <script src="{% static 'chlanie/js/bootstrap.min.js' %}"></script>
 <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
 <link href="{% static 'chlanie/multiple-select.css' %}" rel="stylesheet">
+<style>
+	#footer
+	{
+		background-color:  #0c224a;
+		height: 400px;
+	}
+	.footercontent
+	{
+		width: 50%;
+		display: inline-block;
+	}
+</style>
 </head>
 <body>
-{% block body %}
+{% block body 
+	<div id="footer">
+		<div class="footercontent">
+			<img src=""/>
+		</div>
+		<div class="footercontent">
+			<h2>Kontakt</h2>
+		</div>
+	</div>
 {% endblock %}
 </body>
 

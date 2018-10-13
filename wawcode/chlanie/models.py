@@ -25,9 +25,7 @@ class UserEvent(models.Model):
 class Lokal(models.Model):
     nazwa = models.CharField(max_length=40)
     adres = models.CharField(max_length=200)
-    coordinates = models.CharField(max_length=100, blank=True, null=True)
-    # lokalizacjaNS = models.FloatField()
-    # lokalizacjaWE = models.FloatField()
+    coordinates = models.CharField(max_length=200, blank=True, null=True)
     cenaPiwa = models.FloatField(blank=True, null=True)
     cenaWodki = models.FloatField(blank=True, null=True)
     jedzenie = models.BooleanField(default=False)
