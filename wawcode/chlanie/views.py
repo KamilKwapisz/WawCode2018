@@ -106,6 +106,10 @@ class LokalCreateView(CreateView):
             messages.error("Invalid form")
 
 
+def sample_query(request):
+    lokale = Lokal.objects.all()
+
+
 
 def logout_view(request):
     logout(request)
