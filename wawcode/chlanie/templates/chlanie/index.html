@@ -1,15 +1,109 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <div id="menu">
+		<button onclik="showMenu"></button>
+		<div id="burger-menu">
+			<ul>
+				<li>Dodaj bar</li>
+				<li>Ulubione bary</li>
+				<li>Ranking trandingu</li>
+			</ul>
+		</div>
+		<div id="logo">
+		
+		</div>
+		<div id="nav-menu">
+			<ul>
+				<li><a href=""/>Zaloguj się</a></li>
+				<li><a href=""/>Zarejestruj się</a></li>
+			</ul>
+		</div>
+	</div>
     <style>
       /* Set the size of the div element that contains the map */
+	  a {
+		text-decoration: none;
+	  }
       #map {
         width: 100%;  /* The width is the width of the web page */
        }
+	   #burger-menu
+	   {
+			display: none;
+	   }
+	   #menu
+		{
+			background-color: #0c224a;
+			position: relative;
+			top: 0;
+		}
+		#menu #logo
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		#menu #nav-menu ul
+		{
+			height: 100%;
+		}
+		#menu #nav-menu ul li
+		{
+			display: inline-block;
+			margin-right: 5%;
+			height: 100%;
+			margin-top: 1.5%;
+		}
+		#menu #nav-menu ul li:hover
+		{
+			opacity: 0.8;
+		}
+		#menu #nav-menu ul li a
+		{
+			font-weight: bold;
+			color: white;
+		}
+		#footer
+		{
+			width: 100%;
+			color: white;
+			background-color: #0c224a;
+		}
+		#footer ul li
+		{
+			width: 12%;
+			display: inline-block;
+		}
+		#footer ul li:first-of-type
+		{
+			margin-left: 50%;
+		}
+		#menu ul li:first-of-type
+		{
+			margin-left: 75%;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			outline: 0;
+			font-size: 100%;
+			vertical-align: baseline;
+			background: transparent;
+		}
     </style>
   </head>
   <body>
     <div id="map"></div>
+	<div id="footer">
+		<ul>
+			<li>O nas</li>
+			<li>Kontakt</li>
+			<li>Regulamin</li>
+			<li>Polityka Prywatności</li>
+		</ul>
+	</div>
      <script>
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
@@ -129,7 +223,9 @@
               }
             ],
             {name: 'Styled Map'});
-		document.getElementById('map').style.height = screen.height *0.8 +"px";
+		document.getElementById('map').style.height = screen.height *0.763 +"px";
+		document.getElementById('menu').style.height = screen.height *0.08 +"px";
+		document.getElementById('footer').style.height = screen.height *0.03 +"px";
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -28.643387, lng: 153.612224},
           zoom: 16,
@@ -137,6 +233,9 @@
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
                     'styled_map']
           },
+		  mapTypeControl: false,
+		  fullscreenControl: false,
+		  streetViewControl: false,
 		  gestureHandling: 'greedy'
         });
 		map.mapTypes.set('styled_map', styledMapType);
@@ -151,22 +250,11 @@
               lng: position.coords.longitude
             };
             map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
           });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
+        } 
       }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
+      
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVC9t1ndZRzTd5H25Dbj7gYhy10SnBOeQ&callback=initMap">
