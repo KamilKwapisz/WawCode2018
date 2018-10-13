@@ -1,6 +1,73 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
+<form action="" method="post">
+              {% csrf_token %}
 
-{{form.as_p}}
+              {% if update %}
+              <div class="form-group row">
+                <label for="" class="col-form-label col-sm-1"> {{ form.name.label_tag }}</label>
+                  <div class="col-sm-11">
+                <input class="form-control" value="{{ form.name.value }}" type="text" name="{{ form.name.html_name }}" maxlength="50" id="{{ form.name.id_for_label }}">
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-form-label col-sm-1"> {{ form.url.label_tag }}</label>
+                  {% if not project.can_be_modified %}
+                  <div class="col-sm-11" data-placement="right" data-toggle="tooltip" data-original-title="You can't change project URL after starting crawl">
+                <input class="form-control" value="{{ project.url }}" type="text" name="{{ form.url.html_name }}" id="{{ form.url.id_for_label }}" readonly>
+                  </div>
+                  {% else %}
+                    <div class="col-sm-11" >
+                    <input class="form-control" value="{{ project.url }}" type="text" name="{{ form.url.html_name }}" id="{{ form.url.id_for_label }}" >
+                     </div>
+                  {% endif %}
+              </div>
+
+
+              {% else %}  <!-- create view-->
+              <div class="form-group row">
+                <label for="" class="col-form-label col-sm-1"> {{ form.name.label_tag }}</label>
+                  <div class="col-sm-11">
+                <input class="form-control" placeholder="Project name" type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" maxlength="50">
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-form-label col-sm-1"> {{ form.url.label_tag }}</label>
+                  <div class="col-sm-11">
+                <input class="form-control" placeholder="eg. https://www.google.com" type="text" name="{{ form.url.html_name }}" id="{{ form.url.id_for_label }}">
+                  </div>
+              </div>
+              {% endif %}
+
+
+            {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+          <!--</div>-->
+              <div class="row">
+                  <div class="col-lg-6">
+                      <script>
+                           function displayLoader() {
+                               document.getElementById("loader").style.display = "block";
+                          }
+                      </script>
+                      {% if update %}
+                        <button class="btn btn-success" type="submit" onclick="displayLoader();"> Update </button>
+                      {% else %}
+                        <button class="btn btn-success" type="submit" onclick="displayLoader();"> Create </button>
+                      {% endif %}
+    <!--<input type="submit" value="Update" />-->
+          </form>
 
 {% endblock %}

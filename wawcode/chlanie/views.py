@@ -83,6 +83,9 @@ class LokalCreateView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
+
+            lokal = form.save(commit=False)
+
             return super(LokalCreateView, self).form_valid(form)
         else:
             pass
