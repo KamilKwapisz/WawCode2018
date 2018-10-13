@@ -12,10 +12,26 @@
 <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
 <link href="{% static 'chlanie/multiple-select.css' %}" rel="stylesheet">
 <style>
-	#footer
+	#menu
 	{
 		background-color: #0c224a;
-		height: 400px;
+	}
+	#menu #logo
+	{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#menu ul li
+	{
+		display: inline-block;
+	}
+	#footer
+	{
+		position: absolute;
+		bottom: 0;
+		height: 20%;
+		background-color: #0c224a;
 	}
 	.footercontent
 	{
@@ -26,6 +42,21 @@
 </head>
 <body>
 {% block body 
+	<div id="menu">
+		<div id="logo">
+		
+		</div>
+		<ul>
+			<li>
+				<datalist id="cities">
+					<option value="Warszawa">
+					<option value="Kraków">
+				</datalist>
+			</li>
+			<li><a href=""/>Zaloguj się</a></li>
+			<li><a href=""/>Zarejestruj się</a></li>
+		</ul>
+	</div>
 	<div id="footer">
 		<div class="footercontent">
 			<img src=""/>
