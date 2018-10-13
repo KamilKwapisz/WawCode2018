@@ -78,14 +78,25 @@ class LokalDetailView(DetailView):
         lokal = self.get_object()
 
         info = {
-            "fastfood": lokal.jedzenie,
-            "face": lokal.regionalne,
-            "mic": lokal.karaoke,
-            "smoking_rooms": lokal.palarnia,
-            "weekend": lokal.ogrodek,
-            "battery_charging_full": lokal.ladowanieTelefonu,
-            "music_note": lokal.parkiet,
-            "tv": lokal.mecze
+            "data": {
+                "fastfood": lokal.jedzenie,
+                "face": lokal.regionalne,
+                "mic": lokal.karaoke,
+                "smoking_rooms": lokal.palarnia,
+                "weekend": lokal.ogrodek,
+                "battery_charging_full": lokal.ladowanieTelefonu,
+                "music_note": lokal.parkiet,
+                "tv": lokal.mecze},
+            "dictionary": {
+                "fastfood": "Jedzenie",
+                "face": "Regionalne",
+                "mic": "Karaoke",
+                "smoking_rooms": "Palarnia",
+                "weekend": "Ogródek",
+                "battery_charging_full": "Gniazdka",
+                "music_note": "Parkiet",
+                "tv": "Mecze"
+            }
         }.items()
 
         comments = Comment.objects.filter(lokal=lokal.id)
@@ -93,8 +104,6 @@ class LokalDetailView(DetailView):
         context = dict(lokal=lokal, info=info, comments=comments)
 
         return context
-
-
 
 
 class LokalCreateView(CreateView):
@@ -124,6 +133,7 @@ class LokalCreateView(CreateView):
             return super(LokalCreateView, self).form_valid(form)
         else:
             messages.error("Invalid form")
+
 
 def sample_query(request):
     lokale = Lokal.objects.all()
