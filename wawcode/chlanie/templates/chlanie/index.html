@@ -1,24 +1,45 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      /* Set the size of the div element that contains the map */
+{% extends 'chlanie/base.html' %}
+{% block head %}
+<style>
+	  a {
+		text-decoration: none;
+	  }
       #map {
-        min-height: 1000px;  /* The height is 400 pixels */
-		max-height: 1500px;
         width: 100%;  /* The width is the width of the web page */
        }
-    </style>
-  </head>
-  <body>
-    <h3></h3>
-    <!--The div element for the map -->
+		#footer
+		{
+			width: 100%;
+			color: white;
+			background-color: #0c224a;
+		}
+		#footer ul li
+		{
+			width: 12%;
+			display: inline-block;
+		}
+		#footer ul li:first-of-type
+		{
+			margin-left: 50%;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			outline: 0;
+			font-size: 100%;
+			vertical-align: baseline;
+			background: transparent;
+		}
+  </style>
+{% endblock %}
+
+  {% block body %}
     <div id="map"></div>
+  {% endblock %}
+
+    {% block script %}
      <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
       var map, infoWindow;
       function initMap() {
 	  var styledMapType = new google.maps.StyledMapType(
@@ -133,14 +154,17 @@
               }
             ],
             {name: 'Styled Map'});
-
+		document.getElementById('map').style.height = screen.height *0.763 +"px";
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 21.012, lng: 52.229},
+          center: {lat: -28.643387, lng: 153.612224},
           zoom: 16,
 		  mapTypeControlOptions: {
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
                     'styled_map']
           },
+		  mapTypeControl: false,
+		  fullscreenControl: false,
+		  streetViewControl: false,
 		  gestureHandling: 'greedy'
         });
 		map.mapTypes.set('styled_map', styledMapType);
@@ -155,25 +179,11 @@
               lng: position.coords.longitude
             };
             map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
           });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
         }
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
       }
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVC9t1ndZRzTd5H25Dbj7gYhy10SnBOeQ&callback=initMap">
     </script>
-  </body>
-</html>
+{% endblock %}
