@@ -95,13 +95,15 @@ class LokalDetailView(DetailView):
         return context
 
 
+
+
 class LokalCreateView(CreateView):
     model = Lokal
     fields = [
         'nazwa',
         'adres',
-        'cenaPiwa',
         'cenaWodki',
+        'cenaPiwa',
         'jedzenie',
         'regionalne',
         'godzinyOtwarcia',
@@ -124,6 +126,8 @@ class LokalCreateView(CreateView):
             messages.error("Invalid form")
 
 
+<<<<<<< HEAD
+=======
 def sample_query(request):
     lokale = Lokal.objects.all()
     user_location = "[52.217719, 20.991137]"
