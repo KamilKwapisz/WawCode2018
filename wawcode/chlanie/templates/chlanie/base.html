@@ -13,7 +13,6 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
-<link href="{% static 'chlanie/multiple-select.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -77,13 +76,9 @@
 </body>
 
 {% block script %}
-<script src="{% static 'chlanie/multiple-select.js' %}"></script>
 <script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'chlanie/js/mdb.min.js' %}"></script>
 <script src="{% static 'chlanie/js/popper.min.js' %}"></script>
-<script>
-        $('select').multipleSelect();
-</script>
 
 {% endblock %}
 </html>
