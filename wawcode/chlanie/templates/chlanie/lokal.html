@@ -1,8 +1,20 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
 
+<<<<<<< HEAD
+
+<div class="container">
+    <div class="row">
+        <h1>
+            <strong>{{ lokal.nazwa }}</strong>
+            <br/>
+            <small class="text-muted">{{ lokal.adres }}</small>
+        </h1>
+    </div>
+=======
     {% load static %}
     <script src="{% static 'chlanie/js/jquery.barrating.min.js' %}"></script>
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a
 
 
     <div class="container">
@@ -74,7 +86,13 @@
                 <small class="text-muted">{{ lokal.adres }}</small>
             </h1>
 
+<<<<<<< HEAD
+Nazwa: {{lokal.nazwa}}</br>
+Adres: {{lokal.adres}}</br>
+coordinates: {{coords}}</br>
+=======
         </div>
+>>>>>>> 191efc30e59b0637c9df2da69cb46ff5c00cc42a
 
         <!-- icons -->
         <div class="row">
