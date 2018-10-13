@@ -67,9 +67,10 @@ class LokalCreateView(CreateView):
     model = Lokal
     fields = [
         'nazwa',
+        'adres',
         'cenaPiwa',
         'cenaWodki',
-        'jedznie',
+        'jedzenie',
         'regionalne',
         'godzinyOtwarcia',
         'karaoke',
@@ -82,7 +83,6 @@ class LokalCreateView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-
             return super(LokalCreateView, self).form_valid(form)
         else:
             pass

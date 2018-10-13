@@ -6,6 +6,7 @@ app_name = 'chlanie'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('lokal/dodaj/', views.LokalCreateView.as_view(), name='lokal-create'),
     path('profile/', views.profile, name='profile'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
