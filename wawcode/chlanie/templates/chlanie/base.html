@@ -6,8 +6,14 @@
     <title>{% block title %}tanieChlanie{% endblock %}</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="{% static 'chlanie/css/mdb.min.css' %}">
+<script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
+
+<!-- material icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
 <!-- Latest compiled and minified JavaScript -->
+<<<<<<< HEAD
 <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
 <link href="{% static 'chlanie/multiple-select.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -47,9 +53,26 @@
       .row.content {height:auto;}
     }
   </style>
+=======
+<!--<script src="{% static 'chlanie/js/bootstrap.min.js' %}"></script>-->
+<link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
+<style>
+	#footer
+	{
+		background-color: #0c224a;
+		height: 400px;
+	}
+	.footercontent
+	{
+		width: 50%;
+		display: inline-block;
+	}
+</style>
+>>>>>>> 1872a9e86460cc7aceb6498b111bed01853104c7
 </head>
 
 <body>
+<<<<<<< HEAD
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -75,18 +98,24 @@
   </nav>
   <br>
 {% block body %}
+=======
+{% block body %}
+	<div id="footer">
+		<div class="footercontent">
+			<img src=""/>
+		</div>
+		<div class="footercontent">
+			<h2>Kontakt</h2>
+		</div>
+	</div>
+>>>>>>> 1872a9e86460cc7aceb6498b111bed01853104c7
 {% endblock %}
   </br>
 </body>
 
 {% block script %}
-<script src="{% static 'chlanie/multiple-select.js' %}"></script>
-<script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
+
 <script src="{% static 'chlanie/js/mdb.min.js' %}"></script>
 <script src="{% static 'chlanie/js/popper.min.js' %}"></script>
-<script>
-        $('select').multipleSelect();
-</script>
-
 {% endblock %}
 </html>
