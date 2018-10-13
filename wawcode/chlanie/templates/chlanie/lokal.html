@@ -23,7 +23,7 @@
     <table>
         <tr>
             <td class="text-primary">Cena wódki:</td>
-            <td>{{ lokal.cenaWodki}}</td>
+            <td>{{ lokal.cenaWodki }}</td>
         </tr>
         <tr>
             <td class="text-primary">Cena piwa:</td>
@@ -31,6 +31,20 @@
         </tr>
     </table>
 </div>
+</div>
+
+<div class="row">
+Komentarze: </br>
+{% if comments %}
+    <ul>
+    {% for comment in comments %}
+        <li>{{comment.author}}: {{comment.text}}</li>
+    {% endfor %}
+     </ul>
+{% else %}
+    brak
+{% endif %}
+
 </div>
 
 {% endblock %}

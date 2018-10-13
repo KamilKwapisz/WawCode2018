@@ -11,7 +11,7 @@ from django.views.decorators.debug import sensitive_variables, sensitive_post_pa
 from django.utils.decorators import method_decorator
 import json
 
-from .models import Lokal
+from .models import Lokal, Comment
 from .forms import UserForm
 from .utils import *
 
@@ -87,7 +87,9 @@ class LokalDetailView(DetailView):
             "tv": lokal.mecze
         }.items()
 
-        context = dict(lokal=lokal, info=info)
+        comments = Comment.objects.filter(lokal=lokal.id)
+
+        context = dict(lokal=lokal, info=info, comments=comments)
 
         return context
 
@@ -141,7 +143,7 @@ def search_test(request):
 
 def get_lokals_list(request):
     # TODO getting data from AJAX
-    data = request.GET
+    data = request.GET.get('dane', None)
     # data = {
     #     'cenaPiwa': 3.5,
     #     'cenaWodki': 6.0,

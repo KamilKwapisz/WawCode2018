@@ -16,7 +16,7 @@
                 $.ajax({
                     type: "GET",
                     url: '{% url "chlanie:lokale" %}',
-                    data: JSON.stringify(searchData),
+                    data: {'dane': JSON.stringify(searchData)},
                     success: (data) => {
                         //TODO: ogarnac dane
                         console.log(data);
