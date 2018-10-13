@@ -73,27 +73,6 @@ class RegisterView(View):
 def lokal_detail_view(request, pk):
     lokal = Lokal.objects.get(pk=pk)
 
-        info = {
-            "data": {
-                "fastfood": lokal.jedzenie,
-                "face": lokal.regionalne,
-                "mic": lokal.karaoke,
-                "smoking_rooms": lokal.palarnia,
-                "weekend": lokal.ogrodek,
-                "battery_charging_full": lokal.ladowanieTelefonu,
-                "music_note": lokal.parkiet,
-                "tv": lokal.mecze},
-            "dictionary": {
-                "fastfood": "Jedzenie",
-                "face": "Regionalne",
-                "mic": "Karaoke",
-                "smoking_rooms": "Palarnia",
-                "weekend": "Ogródek",
-                "battery_charging_full": "Gniazdka",
-                "music_note": "Parkiet",
-                "tv": "Mecze"
-            }
-        }.items()
     info = {
         "fastfood": lokal.jedzenie,
         "face": lokal.regionalne,
