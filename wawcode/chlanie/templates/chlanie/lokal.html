@@ -4,20 +4,31 @@
 <div class="container">
     <div class="row">
         <h1>{{ lokal.nazwa }}</h1>
-    </div>
-
-    <div class="row">
-        <h2>{{ lokal.adres }}</h2>
+        <div class="w-100"></div>
+        <h2 class="text-muted">{{ lokal.adres }}</h2>
     </div>
 
     <!-- icons -->
     <div class="row">
         {% for key, value in info %}
             {% if value == True %}
-                <i class="material-icons">key</i>
+                <i class="material-icons">{{ key }}</i>
             {% endif %}
         {% endfor %}
     </div>
+
+<div class="row">
+    <table>
+        <tr>
+            <td class="text-primary">Cena wódki:</td>
+            <td>{{ lokal.cenaWodki}}</td>
+        </tr>
+        <tr>
+            <td class="text-primary">Cena piwa:</td>
+            <td>{{ lokal.cenaPiwa }}</td>
+        </tr>
+    </table>
+</div>
 </div>
 
 {% endblock %}

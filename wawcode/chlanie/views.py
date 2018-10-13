@@ -70,20 +70,19 @@ class LokalDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         lokal = self.get_object()
-        coords = json.loads(lokal.coordinates)
 
         info = {
-            "fastfood":self.jedzenie,
-            "face":self.regionalne,
-            "keyboard_voice":self.karaoke,
-            "smoking_rooms":self.palarnia,
-            "weekend":self.ogrodek,
-            "battery_charged_full":self.ladowanieTelefonu,
-            "music_note":self.parkiet,
-            "tv":self.mecze
+            "fastfood":lokal.jedzenie,
+            "face":lokal.regionalne,
+            "mic":lokal.karaoke,
+            "smoking_rooms":lokal.palarnia,
+            "weekend":lokal.ogrodek,
+            "battery_charging_full":lokal.ladowanieTelefonu,
+            "music_note":lokal.parkiet,
+            "tv":lokal.mecze
         }.items()
 
-        context = dict(lokal=lokal, coords=coords, info=info)
+        context = dict(lokal=lokal, info=info)
 
         return context
 
