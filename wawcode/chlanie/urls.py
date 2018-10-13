@@ -6,7 +6,7 @@ app_name = 'chlanie'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('lokal/dodaj', views.LokalCreateView.as_view(), name='lokal-create'),
+    path('lokal/dodaj/', views.LokalCreateView.as_view(), name='lokal-create'),
     path('lokal/<int:pk>', views.lokal_detail_view, name='lokal-detail'),
     path('search/', views.search_test, name='search'),
     path('profile/', views.profile, name='profile'),
