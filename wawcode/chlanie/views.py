@@ -108,38 +108,27 @@ class LokalCreateView(CreateView):
             messages.error("Invalid form")
 
 
-def sample_query(request):
-    lokale = Lokal.objects.all()
-    user_location = "[52.217719, 20.991137]"
-    radius = 1.0
-    for lokal in lokale:
-        dist = calculate_distance(lokal.coordinates, user_location)
-        print(dist)
-        if dist > radius:
-            lokale = lokale.exclude(id=lokal.pk)
-
-    context = dict(lokale=lokale)
-    return render(request, 'chlanie/lokal_list.html', context)
-
-
 def search_test(request):
     return render(request, 'chlanie/searchtest.html', {})
 
 
 def get_lokals_list(request):
     data = request.GET.dict()
+    user_coordinates = data['coordinates']
+    radius = data['promien']
     for key, value in data.items():
         if value == 'true':
             data[key] = True
         elif value == 'false':
             data[key] = False
-    print(data)
-    data_without_prices = {k: v for k, v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('coordinates', 'promien')}
     lokale = Lokal.objects.filter(**data_without_prices)
     if 'cenaPiwa' in data.keys():
         lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'])
     if 'cenaWodki' in data.keys():
         lokale = lokale.filter(cenaWodki__lte=data['cenaWodki'])
+    lokale = get_places_within_radius(lokale, user_coordinates, radius)
 
     print(lokale)
     json_data = serializers.serialize('json', list(lokale))
