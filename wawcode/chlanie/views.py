@@ -3,11 +3,14 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.views.generic import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.decorators.debug import sensitive_variables, sensitive_post_parameters
 from django.utils.decorators import method_decorator
+
+from .models import Lokal
 
 from .forms import UserForm
 
@@ -58,6 +61,32 @@ class RegisterView(View):
             form.add_error('password_confirm', 'Passwords do not match')
 
         return render(request, self.template_name, {'form': form})
+
+
+class LokalCreateView(CreateView):
+    model = Lokal
+    fields = [
+        'nazwa',
+        'cenaPiwa',
+        'cenaWodki',
+        'jedznie',
+        'regionalne',
+        'godzinyOtwarcia',
+        'karaoke',
+        'palarnia',
+        'ogrodek',
+        'ladowanieTelefonu',
+        'parkiet',
+        'mecze',
+        ]
+
+    def form_valid(self, form):
+        if form.is_valid():
+
+            return super(LokalCreateView, self).form_valid(form)
+        else:
+            pass
+
 
 
 def logout_view(request):

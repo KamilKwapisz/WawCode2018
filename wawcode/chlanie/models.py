@@ -23,6 +23,7 @@ class UserEvent(models.Model):
 
 class Lokal(models.Model):
     nazwa = models.CharField(max_length=40)
+    adres = models.CharField(max_length=200)
     lokalizacjaNS = models.FloatField()
     lokalizacjaWE = models.FloatField()
     cenaPiwa = models.FloatField()
