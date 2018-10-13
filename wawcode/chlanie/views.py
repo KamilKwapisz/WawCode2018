@@ -120,14 +120,11 @@ class LokalCreateView(CreateView):
 
             lokal = form.save(commit=False)
             # TODO validating adress string
-            lokal.coordinates = adress_to_coordinates(lokal.adres)
+            lokal.coordinates = address_to_coordinates(lokal.adres)
             return super(LokalCreateView, self).form_valid(form)
         else:
             messages.error("Invalid form")
 
-
-<<<<<<< HEAD
-=======
 def sample_query(request):
     lokale = Lokal.objects.all()
     user_location = "[52.217719, 20.991137]"
