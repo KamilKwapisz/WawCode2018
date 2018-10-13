@@ -13,4 +13,6 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),
+
+    path('ajax/lokale', views.get_lokals_list, name='lokale'),
 ]

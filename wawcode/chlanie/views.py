@@ -126,26 +126,10 @@ def get_lokals_list(request):
         'cenaPiwa': 3.5,
         'cenaWodki': 6.0,
         'jedzenie': True,
-        # 'regionalne': True,
-        # 'karaoke': True,
-        # 'palarnia': True,
-        # 'ogrodek': True,
-        # 'ladowanieTelefonu': True,
-        # 'parkiet': True,
-        # 'mecze': True,
     }
-    lokale = Lokal.objects.filter(
-        cenaPiwa=data['cenaPiwa'],
-        cenaWodki=data['cenaWodki'],
-        jedzenie=data['jedzenie'],
-        regionalne=data['regionalne'],
-        karaoke=data['karaoke'],
-        palarnia=data['palarnia'],
-        ogrodek=data['ogrodek'],
-        ladowanieTelefonu=data['ladowanieTelefonu'],
-        parkiet=data['parkiet'],
-        mecze=data['mecze'],
-    )
+    data2 = {k:v for k,v in d.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    lokale = Lokal.objects.filter(**data2)
+    lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'], cenaWodki__lte=data['cenaWodki'])
 
 
 def logout_view(request):
