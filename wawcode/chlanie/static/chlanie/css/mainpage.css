@@ -19,7 +19,6 @@ a {
     padding: 20px;
 }
 
-
 .container-burger {
     text-align: center;
     cursor: pointer;
@@ -67,20 +66,47 @@ a {
     padding: 0 20px;
 }
 
-.sidenav2 {
-    height: 100%;
-    width: 0;
+/* The side navigation menu */
+.footer {
     position: fixed;
-    z-index: 11;
-    top: 0;
-    right: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #2f2f2f;
+    color: white;
+    text-align: right;
 }
 
-.sidenav2 .closebtn2 {
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 11; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
@@ -88,12 +114,39 @@ a {
     margin-left: 50px;
 }
 
+#main {
+    transition: margin-left .5s;
+    padding: 0px;
+}
+
 @media screen and (max-height: 450px) {
-    .sidenav2 {
+    .sidenav {
         padding-top: 15px;
     }
 
-    .sidenav2 a {
+    .sidenav a {
         font-size: 18px;
+    }
+}
+
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    height: 100%;
+}
+
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+
+    .row.content {
+        height: auto;
     }
 }

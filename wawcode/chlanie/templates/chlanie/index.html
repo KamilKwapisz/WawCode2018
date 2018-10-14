@@ -89,15 +89,18 @@
                             for (var i = 0; i < response.length; i++) {
                                 var pk = response[i]['pk'];
                                 var lokal = response[i]['fields'];
-                                var html = `<div class="card"><div class="card-body">
+                                var html = `<div id="pub${pk}" class="card"><div class="card-body">
 <h4 class="card-title"><a>${lokal['nazwa']}</a></h4><p class="card-text">${lokal['godzinyOtwarcia']}</p>
 <a href="lokal/${pk}" class="btn btn-primary">Szczegóły</a></div> </div>`
                                 $("#wyniki").append(html);
                             }
                             var locations = [];
-                            for (var i=0; i < response.length; i++){
+                            for (var i = 0; i < response.length; i++) {
                                 var location = JSON.parse(response[i]['fields']['coordinates'])
-                                console.log(location)
+                                var id = "#pub" + pk.toString();
+                                $(id).click((ev)=> {
+                                    wysrodkuj(location);
+                                });
                                 locations.push(location)
                             }
                             wyszukaj(locations);
@@ -290,27 +293,32 @@
             });
         }
 
-function wyszukaj(locations)
-	{
-		var i, marker;
-		{#var locations=[#}
-		{#	[12.12345, 15.54321],#}
-		{#	[22.12345, 25.54321],#}
-		{#	[32.12345, 35.54321],#}
-		{#	[42.12345, 45.54321],#}
-		{#	[52.12345, 55.54321],#}
-		{#];#}
-		for (i = 0; i < locations.length; i++) {
-			marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-				map: map
-			});
-			marker.addListener('click', function() {
-				map.panTo(this.getPosition());
-				map.setZoom(12);
-			});
-		}
-	}
+        function wyszukaj(locations) {
+            var i, marker;
+            {#var locations=[#}
+            {#	[12.12345, 15.54321],#}
+            {#	[22.12345, 25.54321],#}
+            {#	[32.12345, 35.54321],#}
+            {#	[42.12345, 45.54321],#}
+            {#	[52.12345, 55.54321],#}
+            {#];#}
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                    map: map
+                });
+                marker.addListener('click', function () {
+                    map.panTo(this.getPosition());
+                    map.setZoom(12);
+                });
+            }
+        }
+
+        function wysrodkuj(localization){
+            console.log("wysrodkuj");
+            map.panTo(new google.maps.LatLang(localization[0], localization[1]));
+            map.setZoom(12);
+        }
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVC9t1ndZRzTd5H25Dbj7gYhy10SnBOeQ&callback=initMap">
@@ -319,8 +327,13 @@ function wyszukaj(locations)
 
 {% block sidenav2 %}
     <div id="wyniki" class="container">
-    </div>
-    <div id="mySidenav2" class="sidenav2 ">
-        <a href="javascript:void(0)" class="closebtn2" onclick="closeNav2()">&times;</a>
+            <div class="card-body card bg-white">
+                <!-- Title -->
+                <h4 class="card-title"><a>Card title</a></h4>
+                <!-- Text -->
+                <p class="card-text">TEXT</p>
+                <!-- Button -->
+                <a href="#" class="btn btn-primary">Szczegóły</a>
+            </div>
     </div>
 {% endblock %}
