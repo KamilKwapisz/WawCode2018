@@ -19,6 +19,7 @@
 			background-color: white;
 			box-shadow: 15px 10px 30px 0;
 			width: 20%;
+			height: 35%;
 			padding: 20px;
 		}
 
@@ -73,65 +74,6 @@
 
 {% block body %}
     <div id="map">
-<<<<<<< HEAD
-		
-	</div>
-	<div id="formularz-na-mapie">
-			<form>
-				<div class="form-group col-sm-6">
-				  <label>Cena piwa:</label>
-				  <input type="number" step="0.01" min="0" class="form-control">
-				</div>
-				<div class="form-group col-sm-6">
-				  <label>Cena wódki:</label>
-				  <input type="number" step="0.01" min="0" class="form-control">
-				</div>
-				<div class="form-group col-sm-8">
-				  <label>Adres:</label>
-				  <input id="adress" type="text" class="form-control">
-				</div>
-				<div class="form-group col-sm-4">
-				  <label>Promień:</label>
-				  <input type="number" min="0" class="form-control">
-				</div>
-				<div>
-				<button type="submit" class="btn btn-default">Search</button>
-				</div>
-				<div class="container-burger" onclick="rozwin(this)">
-				  <div class="bar1"></div>
-				  <div class="bar2"></div>
-				  <div class="bar3"></div>
-				</div>	
-				<div id="checkboxy">
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.jedzenie.id_for_label }}" name="{{ form.jedzenie.html_name }}"> Zamawianie jedzenia </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.regionalne.id_for_label }}" name="{{ form.regionalne.html_name }}"> Regionalne piwa </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.karaoke.id_for_label }}" name="{{ form.karaoke.html_name }}"> Karaoke </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.palarnia.id_for_label }}" name="{{ form.palarnia.html_name }}"> Palarnia </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.ogrodek.id_for_label }}" name="{{ form.ogrodek.html_name }}"> Ogródek </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.ladowanieTelefonu.id_for_label }}" name="{{ form.ladowanieTelefonu.html_name }}"> Ładowanie telefonu </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.parkiet.id_for_label }}" name="{{ form.parkiet.html_name }}"> Parkiet </label>
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.mecze.id_for_label }}" name="{{ form.mecze.html_name }}"> Transmisja meczów </label>
-					</div>
-				</div>
-			</form>
-		</div>
-  {% endblock %}
-=======
 
     </div>
     <div id="formularz-na-mapie">
@@ -214,7 +156,6 @@
         </div>
     </div>
 {% endblock %}
->>>>>>> 5d12e82d3c6634f0101c76db6ae73ff018b450bd
 
     {% block script %}
      <script>
@@ -229,13 +170,12 @@
 		else{
 			gowno = false;
 			document.getElementById('checkboxy').style.display="none";
-			document.getElementById('formularz-na-mapie').style.height=screen.height*0.35+"px";
+			document.getElementById('formularz-na-mapie').style.height="35%";
 		}
 	}
 
       var map, infoWindow;
       function initMap() {
-	  document.getElementById('formularz-na-mapie').style.height=screen.height*0.35+"px";
 	  var styledMapType = new google.maps.StyledMapType(
             [
               {elementType: 'geometry', stylers: [{color: '#ebe3cd'}]},
@@ -365,41 +305,6 @@
         map.setMapTypeId('styled_map');
         infoWindow = new google.maps.InfoWindow;
 
-<<<<<<< HEAD
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            map.setCenter(pos);
-			geocodeLatLng(pos);
-          });
-
-        } 
-      }
-	  
-	  var geocoder = new google.maps.Geocoder;
-	
-	function geocodeLatLng(pos) {
-		var latlng = {lat: pos.lat(), lng: pos.lng()};
-		geocoder.geocode({'location': latlng}, function(results, status) {
-		  if (results[0]) {
-			var marker = new google.maps.Marker({
-			  position: latlng,
-			  map: map
-			});
-			document.getElementById('adress').value=results[0].formatted_address;
-			infowindow.setContent(results[0].formatted_address);
-			infowindow.open(map, marker);
-		  } else {
-			window.alert('No results found');
-		  }
-		
-	  });
-	}
-=======
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
@@ -412,7 +317,6 @@
 
             }
         }
->>>>>>> 5d12e82d3c6634f0101c76db6ae73ff018b450bd
 
     </script>
     <script async defer
