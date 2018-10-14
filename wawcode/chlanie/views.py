@@ -65,6 +65,7 @@ def lokal_detail_view(request, pk):
     context = dict(lokal=lokal, info=info, comments=comments)
     context['rating'] = rating
     context['was_rated'] = was_rated
+    context['is_owner'] = user.username == lokal.owner
 
     if Like.objects.filter(user=user, lokal=lokal).count() == 1:
         context['liked'] = True
@@ -143,7 +144,6 @@ def get_lokals_list(request):
     if 'cenaWodki' in data.keys():
         lokale = lokale.filter(cenaWodki__lte=float(data['cenaWodki']))
     lokale = get_places_within_radius(lokale, user_coordinates, radius)
-
     print(lokale)
     json_data = serializers.serialize('json', list(lokale))
     print(json_data)

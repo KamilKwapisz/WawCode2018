@@ -1,26 +1,37 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <div class="alert alert-danger" role="alert" style="display: none">
-            Już oceniłeś lokal!
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-danger" role="alert" style="display: none">
+                Już oceniłeś lokal!
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="alert alert-success" role="success" style="display: none">
-            Dziękujemy za ocenę!
+        <div class="row">
+            <div class="alert alert-success" role="success" style="display: none">
+                Dziękujemy za ocenę!
+            </div>
         </div>
-    </div>
+
+        <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <div class="row">
+    			<div class="receipt-header">
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						<div class="receipt-left">
+							<img class="img-responsive" alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" style="width: 142px; border-radius: 86px;">
+						</div>
+					</div>
+				</div>
+        </div>
 
 
-    <div class="row">
+        <div class="row">
 
-        <h1>
-            <strong>{{ lokal.nazwa }}</strong>
-            <a><i class="heart material-icons">favorite_border</i></a>
-            <script type="text/javascript">
+            <h1>
+                <strong>{{ lokal.nazwa }}</strong>
+                <a><i class="heart material-icons">favorite_border</i></a>
+                <script type="text/javascript">
                     var username = "{{ request.user.username }}";
                     let heart = $("#heart")
                     window.onload = function () {
@@ -44,24 +55,21 @@
                             })
                         })
                     })
+                </script>
+            </h1>
 
+            <div class="row container">
+                <div class="col">
+                    <select id="starRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="col">({{ rating }})</div>
 
-
-            </script>
-        </h1>
-
-        <div class="row container">
-            <div class="col">
-                <select id="starRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-                <div class="col">({{ rating }})</div>
-
-                <script type="text/javascript">
+                    <script type="text/javascript">
                         var username = "{{ request.user.username }}";
                         let options = {
                             theme: 'bootstrap-stars',
@@ -81,26 +89,50 @@
                             }
                         }
                         $('#starRating').barrating('show', options);
-
-
-
-                </script>
+                    </script>
+                </div>
             </div>
+            <h1>
+                <small class="text-muted">{{ lokal.adres }}</small>
+            </h1>
         </div>
-        <h1>
-            <small class="text-muted">{{ lokal.adres }}</small>
-        </h1>
-    </div>
 
-    <!-- icons -->
-    <div class="row">
-        {% for key, value in info %}
-        {% if value == True %}
-        <i class="material-icons">{{ key }}</i>
-        {% endif %}
-        {% endfor %}
-    </div>
+        <!-- icons -->
+        <div class="row">
+            {% for key, value in info %}
+                {% if value == True %}
+                    <i class="material-icons">{{ key }}</i>
+                {% endif %}
+            {% endfor %}
+        </div>
 
+        <div class="row">
+            <table>
+                <tr>
+                    <td class="text-primary">Cena wódki:</td>
+                    <td>{{ lokal.cenaWodki }}</td>
+                </tr>
+                <tr>
+                    <td class="text-xl-left text-primary">Cena piwa:</td>
+                    <td>{{ lokal.cenaPiwa }}</td>
+                </tr>
+            </table>
+        </div>
+
+
+<<<<<<< HEAD
+        <div class="row">
+            Komentarze: </br>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="media d-block d-md-flex mt-4">
+                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                            <h5 class="font-weight-bold mt-0">
+                                <a href="">{{ comment.author }}</a>
+                                <a href="" class="pull-right">
+                                    <i class="fa fa-reply"></i>
+                                </a>
+=======
     <div class="row">
         <table>
             <tr>
@@ -113,6 +145,9 @@
             </tr>
         </table>
     </div>
+    {% if is_owner %}
+    owner
+    {% endif %}
     <div class="row">
         Rezerwacja baru:
         <div class="col-md-12">
@@ -126,104 +161,27 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">
                                 <b>Rezerwacja stolika</b>
+>>>>>>> 0d80a2c53eeb1d547075c19690ef694d3b81c86f
                             </h5>
-                            <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span
-                                    aria-hidden="true"> &times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <label>Jaki stolik?</label>
-                                <select class="form-control" name="stolik" id="stolik">
-                                    <option value="1">
-                                        3 osobowy
-                                    </option>
-                                    <option value="3">
-                                        4 osobowy
-                                    </option>
-                                    <option value="5">
-                                        5 osobowy
-                                    </option>
-                                </select>
-                                <label>Data</label>
-                                <select class="form-control" name="data_rezerwacji" id="data_rezerwacji">
-                                    <option value="15.10.2018">
-                                        15.10.2018
-                                    </option>
-                                    <option value="16.10.2018">
-                                        16.10.2018
-                                    </option>
-                                    <option value="17.10.2018">
-                                        17.10.2018
-                                    </option>
-                                </select>
-                            </form>
-                            <script type="text/javascript">
-                                var table = $("#stolik").value;
-                                var data_rezerwacji = $("#data_rezerwacji").value;
-                                $("#reservation_button").click(function(e) {
-                                    console.log("aaa");
-                                    console.log(table);
-                                    console.log(data_rezerwacji);
-                                    e.preventDefault();
-                                    $.ajax({
-                                        type: "GET",
-                                         url: '{% url "chlanie:reservation" %}',
-                                        data: {
-                                                'username': username,
-                                                'idLokalu': {{lokal.id}},
-                                                'stolik': table,
-                                                'data_rezerwacji': data_rezerwacji
-                                         },
-                                        success: function(data) {
-                                            var msg = data.msg;
-                                           alert(msg);
-                                        },
-                                    });
-                                });
-                                 </script>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" id="reservation_button" type="button">Rezerwuj!</button>
+                            {{ comment.text }}
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        Komentarze: </br>
-        {% if comments %}
-        {% for comment in comments %}
-        <div class="media d-block d-md-flex mt-4">
-            <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                <h5 class="font-weight-bold mt-0">
-                    <a href="">{{ comment.author }}</a>
-                    <a href="" class="pull-right">
-                        <i class="fa fa-reply"></i>
-                    </a>
-                </h5>
-                {{ comment.text }}
-            </div>
-        </div>
-        {% endfor %}
-        </ul>
-        {% else %}
-        brak</br>
-        {% endif %}
-        Dodaj komentarz:
-        <form method="post">
-            {% csrf_token %}
-            <input id="addComment" class="form-control" id="{{ form.text.id_for_label }}" placeholder="Treść komentarza"
-                   type="text"
-                   name="{{ form.text.html_name }}">
-            <div class="col-md-16 text-center">
+                {% endfor %}
+                </ul>
+            {% else %}
+                brak</br>
+            {% endif %}
+            Dodaj komentarz:
+            <form method="post">
+                {% csrf_token %}
+                <input id="addComment" class="form-control" id="{{ form.text.id_for_label }}" placeholder="Treść komentarza" type="text"
+                       name="{{ form.text.html_name }}">
+                {#                <div class="col-md-16 text-center">#}
                 <a id="send"><i class="material-icons">send</i></a>
-            </div>
-        </form>
+                {#                </div>#}
+            </form>
 
-        <script>
+            <script>
                 $("#send").click((ev) => {
                     let comment = $("#addComment").value;
                         $.ajax({
@@ -237,10 +195,7 @@
                         });
                     }
                 );
-
-
-
-        </script>
+            </script>
+        </div>
     </div>
-</div>
 {% endblock %}
