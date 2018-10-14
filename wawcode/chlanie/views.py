@@ -196,6 +196,15 @@ def reservation(request):
     return JsonResponse({'msg': msg}, safe=False)
 
 
+def favourite(request):
+    data = request.GET.dict()
+    username = data['username']
+    lokal_id = data['idLokalu']
+    user = User.objects.get(username=username)
+    lokal = Lokal.objects.get(id=lokal_id)
+    if 'fav' in data.keys():
+        Like.objects.create(user=user, lokal=lokal)
+
 
 def logout_view(request):
     logout(request)

@@ -19,4 +19,5 @@ urlpatterns = [
     path('ajax/rating', views.rate, name='rating'),
     path('ajax/comment', views.comment, name='comment'),
     path('ajax/reservation', views.reservation, name='reservation'),
+    path('ajax/favourite', views.favourite, name='favourite'),
 ]
