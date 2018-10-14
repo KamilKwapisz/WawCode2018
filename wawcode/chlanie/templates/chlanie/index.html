@@ -89,16 +89,20 @@
                             for (var i = 0; i < response.length; i++) {
                                 var pk = response[i]['pk'];
                                 var lokal = response[i]['fields'];
-                                var html = `<div id="pub${pk}" class="card"><div class="card-body">
-<h4 class="card-title"><a>${lokal['nazwa']}</a></h4><p class="card-text">${lokal['godzinyOtwarcia']}</p>
-<a href="lokal/${pk}" class="btn btn-primary">Szczegóły</a></div> </div>`
+                                var html = `<div class="card">
+                                                 <div class="card-body  white-bg">
+                                                    <h3 class="card-title"><a>${lokal['nazwa']}</a></h3>
+                                                    <p style="font-size: 130%" class="card-text">${lokal['adres']}</p>
+                                                    <a href="lokal/${pk}" class="btn btn-dark">Szczegóły</a>
+                                                 </div>
+                                            </div>`
                                 $("#wyniki").append(html);
                             }
                             var locations = [];
                             for (var i = 0; i < response.length; i++) {
                                 var location = JSON.parse(response[i]['fields']['coordinates'])
                                 var id = "#pub" + pk.toString();
-                                $(id).click((ev)=> {
+                                $(id).click((ev) => {
                                     wysrodkuj(location);
                                 });
                                 locations.push(location)
@@ -314,7 +318,7 @@
             }
         }
 
-        function wysrodkuj(localization){
+        function wysrodkuj(localization) {
             console.log("wysrodkuj");
             map.panTo(new google.maps.LatLang(localization[0], localization[1]));
             map.setZoom(12);
@@ -326,14 +330,14 @@
 {% endblock %}
 
 {% block sidenav2 %}
-    <div id="wyniki" class="container">
-            <div class="card-body card bg-white">
-                <!-- Title -->
-                <h4 class="card-title"><a>Card title</a></h4>
-                <!-- Text -->
-                <p class="card-text">TEXT</p>
-                <!-- Button -->
-                <a href="#" class="btn btn-primary">Szczegóły</a>
+
+    <div id="wyniki" class="card-group text-center ">
+        <div class="card">
+            <div class="card-body  white-bg">
+                <h3 class="card-title"><a>${lokal['nazwa']}</a></h3>
+                <p style="font-size: 130%" class="card-text">${lokal['adres']}</p>
+                <a href="lokal/${pk}" class="btn btn-dark">Szczegóły</a>
             </div>
+        </div>
     </div>
 {% endblock %}
