@@ -63,7 +63,7 @@ class Comment(models.Model):
         return super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.author)
 
 
 class Reservation(models.Model):
