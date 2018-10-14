@@ -134,16 +134,16 @@
                 <label>Cena wódki:</label>
                 <input name="cenaWodki" type="number" step="0.01" min="0" class="form-control">
             </div>
-            <div class="form-group col-sm-8">
-                <label>Adres:</label>
+            <div class="form-group col-sm-7">
+                <label>Twój adres:</label>
                 <input name="adres" type="text" class="form-control" id="adress">
             </div>
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-5">
                 <label>Promień:</label>
                 <input name="promien" type="number" min="0" class="form-control">
             </div>
             <div>
-                <button id="searchStart" class="btn btn-default">Search</button>
+                <button id="searchStart" class="btn btn-default" onclick="wyszukaj()">Search</button>
             </div>
             <div class="container-burger" onclick="rozwin(this)">
                 <div class="bar1"></div>
@@ -353,7 +353,7 @@
               }
             ],
             {name: 'Styled Map'});
-		document.getElementById('map').style.height = screen.height *0.763 +"px";
+		document.getElementById('map').style.height = window.screen.availHeight*0.93 +"px";
 		geocoder = new google.maps.Geocoder;
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -28.643387, lng: 153.612224},
@@ -396,6 +396,27 @@
 	  });
 	}
 
+	function wyszukaj()
+	{
+		var i, marker;
+		var locations=[
+			[12.12345, 15.54321],
+			[22.12345, 25.54321],
+			[32.12345, 35.54321],
+			[42.12345, 45.54321],
+			[52.12345, 55.54321],
+		];
+		for (i = 0; i < locations.length; i++) {  
+			marker = new google.maps.Marker({
+				position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+				map: map
+			});
+			marker.addListener('click', function() {
+				map.panTo(this.getPosition());
+				map.setZoom(12);
+			});
+		}
+	}	
 
     </script>
     <script async defer
