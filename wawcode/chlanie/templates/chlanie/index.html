@@ -72,6 +72,53 @@
     </style>
 {% endblock %}
 
+{% block button %}
+<li><a onclick="openNav2()">Pokaż lokale</a></li>
+{% endblock %}
+
+{% block style1 %}
+<style>
+		.sidenav2 {
+		    height: 100%;
+		    width: 0;
+		    position: fixed;
+		    z-index: 11;
+		    top: 0;
+		    right: 0;
+		    background-color: #111;
+		    overflow-x: hidden;
+		    transition: 0.5s;
+		    padding-top: 60px;
+		}
+
+		.sidenav2 a {
+		    padding: 8px 8px 8px 32px;
+		    text-decoration: none;
+		    font-size: 25px;
+		    color: #818181;
+		    display: block;
+		    transition: 0.3s;
+		}
+
+		.sidenav2 a:hover {
+		    color: #f1f1f1;
+		}
+
+		.sidenav2 .closebtn {
+		    position: absolute;
+		    top: 0;
+		    right: 25px;
+		    font-size: 36px;
+		    margin-left: 50px;
+		}
+
+		@media screen and (max-height: 450px) {
+		  .sidenav2 {padding-top: 15px;}
+		  .sidenav2 a {font-size: 18px;}
+		}
+</style>
+{% endblock %}
+
 {% block body %}
     <div id="map">
 
@@ -125,7 +172,7 @@
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" id="{{ form.ladowanieTelefonu.id_for_label }}"
-                                  name="ladowanieTelefonu"> Ładowanie telefonu </label>
+                                  name="ladowanie"> Ładowanie telefonu </label>
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" id="{{ form.parkiet.id_for_label }}"
@@ -148,8 +195,8 @@
                     });
                     $.ajax({
                             type: "GET",
-                            url: '{% url "chlanie:lokale" %}',
-                            data: paramObj,
+                            url: '{% url "chlanie:index" %}',
+                            data: JSON.stringify(paramObj),
                         });
                 });
             </script>
@@ -322,4 +369,14 @@
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVC9t1ndZRzTd5H25Dbj7gYhy10SnBOeQ&callback=initMap">
     </script>
+{% endblock %}
+
+{% block sidenav2 %}
+<div id="mySidenav2" class="sidenav2">
+  <a href="javascript:void(0)" class="closebtn2" onclick="closeNav2()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
 {% endblock %}
