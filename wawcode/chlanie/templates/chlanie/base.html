@@ -8,18 +8,74 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{% static 'chlanie/css/mdb.min.css' %}">
     <link rel="stylesheet" href="{%  static 'chlanie/themes/bootstrap-stars.css' %}">
-<link rel="stylesheet" href="{% static 'chlanie/css/mdb.min.css' %}">
+    <link rel="stylesheet" href="{% static 'chlanie/css/mdb.min.css' %}">
 
     <!-- material icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- Latest compiled and minified JavaScript -->
-<link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-<style>
+  <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <style>
+      /* The side navigation menu */
+      .footer {
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          background-color: #2f2f2f;
+          color: white;
+          text-align: right;
+      }
+      .sidenav {
+      height: 100%; /* 100% Full-height */
+      width: 0; /* 0 width - change this with JavaScript */
+      position: fixed; /* Stay in place */
+      z-index: 11; /* Stay on top */
+      top: 0; /* Stay at the top */
+      left: 0;
+      background-color: #111; /* Black*/
+      overflow-x: hidden; /* Disable horizontal scroll */
+      padding-top: 60px; /* Place content 60px from the top */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      }
+
+      /* The navigation menu links */
+      .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+      }
+
+  /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+/* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      padding: 20px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
@@ -47,51 +103,6 @@
   {% block head %}
 
   {% endblock %}
-    <!-- Latest compiled and minified JavaScript -->
-    <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <style>
-        /* Remove the navbar's default margin-bottom and rounded borders */
-        .navbar {
-            margin-bottom: 0;
-            border-radius: 0;
-        }
-
-        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-        .row.content {
-            height: 450px
-        }
-
-        /* Set gray background color and 100% height */
-        .sidenav {
-            padding-top: 20px;
-            background-color: #f1f1f1;
-            height: 100%;
-        }
-
-        /* Set black background color, white text and some padding */
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-
-            .row.content {
-                height: auto;
-            }
-        }
-
-    </style>
 </head>
 
 <body>
@@ -103,33 +114,47 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Logo</a>
+        <a class="navbar-brand" href="{% url 'chlanie:index' %}">Logo</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/lokal/dodaj">Dodaj lokal</a></li>
+          <li class=" "><a onclick="openNav()">Otwórz</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Zaloguj się</a></li>
-          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Zarejestruj się</a></li>
+          <li><a href="/register"><span class="glyphicon glyphicon-log-in"></span> Zarejestruj się</a></li>
         </ul>
       </div>
     </div>
-</nav>
+    </nav>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/lokal/dodaj">Dodaj lokal</a>
+      <a href="#">Ulubione</a>
+    </div>
 {% block body %}
 
 {% endblock %}
+    <div class="footer">
+        <a>Copyrights reserved to Vladimir Putin</a>
+    </div>
 </body>
-
-{% block script %}
     <script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'chlanie/js/mdb.min.js' %}"></script>
     <script src="{% static 'chlanie/js/popper.min.js' %}"></script>
+    <script>
+        /* Set the width of the side navigation to 250px */
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
 
-<script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
-<script src="{% static 'chlanie/js/mdb.min.js' %}"></script>
-<script src="{% static 'chlanie/js/popper.min.js' %}"></script>
-
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+{% block script %}
 
 {% endblock %}
 </html>
