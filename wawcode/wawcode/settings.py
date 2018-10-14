@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chlanie',
+    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
 DATE_INPUT_FORMATS = ('%d-%m-%Y')
 
 LOGIN_REDIRECT_URL = '/profile'
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BPsQ5Zm60h2c9QIZCR7_IimihHHwtREP5rAXTG5Uy_LRyAYx_kdH_IJ1y7r4s6UPl6clgADBlKbsIu-N2JvzeTs",
+    "VAPID_PRIVATE_KEY": "_IQXZZkMnJ4wwWGn0DpAE9uq21SqgKpHHd4puFdrX2Q",
+    "VAPID_ADMIN_EMAIL": "kamil@kwapisz.pl"
+}
