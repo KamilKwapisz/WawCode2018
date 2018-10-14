@@ -125,7 +125,7 @@
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" id="{{ form.ladowanieTelefonu.id_for_label }}"
-                                  name="ladowanie"> Ładowanie telefonu </label>
+                                  name="ladowanieTelefonu"> Ładowanie telefonu </label>
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" id="{{ form.parkiet.id_for_label }}"
@@ -148,8 +148,8 @@
                     });
                     $.ajax({
                             type: "GET",
-                            url: '{% url "chlanie:index" %}',
-                            data: JSON.stringify(paramObj),
+                            url: '{% url "chlanie:lokale" %}',
+                            data: paramObj,
                         });
                 });
             </script>

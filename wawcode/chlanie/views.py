@@ -120,20 +120,24 @@ def search_test(request):
 
 def get_lokals_list(request):
     data = request.GET.dict()
-    user_coordinates = data['coordinates']
-    radius = data['promien']
+    print(data)
+    # user_coordinates = data['coordinates']
+    user_coordinates = "[52.220116, 21.012091]"
+    radius = int(data['promien'])
     for key, value in data.items():
         if value == 'true':
             data[key] = True
         elif value == 'false':
             data[key] = False
-    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('cenaPiwa', 'cenaWodki')}
-    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('coordinates', 'promien')}
+    data_without_prices = {k: v for k, v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('coordinates', 'promien', 'adres')}
+    print("DEBUG2, ", data_without_prices)
     lokale = Lokal.objects.filter(**data_without_prices)
+    print("DEBUG ", lokale.count())
     if 'cenaPiwa' in data.keys():
-        lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'])
+        lokale = lokale.filter(cenaPiwa__lte=float(data['cenaPiwa']))
     if 'cenaWodki' in data.keys():
-        lokale = lokale.filter(cenaWodki__lte=data['cenaWodki'])
+        lokale = lokale.filter(cenaWodki__lte=float(data['cenaWodki']))
     lokale = get_places_within_radius(lokale, user_coordinates, radius)
 
     print(lokale)
