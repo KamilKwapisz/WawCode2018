@@ -17,6 +17,7 @@ a {
     box-shadow: 15px 10px 30px 0;
     width: 20%;
     padding: 20px;
+    border-radius: 15px;
 }
 
 .container-burger {
