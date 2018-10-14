@@ -66,6 +66,10 @@ def lokal_detail_view(request, pk):
     context['rating'] = rating
     context['was_rated'] = was_rated
     context['is_owner'] = user.username == lokal.owner
+    if Like.objects.filter(user=user, lokal=lokal).count() > 0:
+        context['is_fav'] = True
+    else:
+        context['is_fav'] = False
 
     if Like.objects.filter(user=user, lokal=lokal).count() == 1:
         context['liked'] = True
@@ -202,8 +206,24 @@ def favourite(request):
     lokal_id = data['idLokalu']
     user = User.objects.get(username=username)
     lokal = Lokal.objects.get(id=lokal_id)
-    if 'fav' in data.keys():
-        Like.objects.create(user=user, lokal=lokal)
+
+    if Like.objects.filter(user=user, lokal=lokal).count() > 0:
+        Like.objects.filter(user=user, lokal=lokal).delete()
+    else:
+        if 'fav' in data.keys():
+            Like.objects.create(user=user, lokal=lokal)
+
+    return JsonResponse(True, safe=False)
+
+
+def ulubione(request):
+    user = request.user
+    likes = Like.objects.filter(user=user)
+    ulub = list()
+    for like in likes:
+        ulub.append(like.lokal)
+    context = dict(lokale=ulub)
+    return render(request, "chlanie/ulubione.html", context)
 
 
 def logout_view(request):

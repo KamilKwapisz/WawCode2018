@@ -1,0 +1,8 @@
+{% extends 'chlanie/base.html' %}
+{% block body %}
+    {% if lokale %}
+        {% for lokal in lokale %}
+            {{  lokal.nazwa }}
+        {% endfor %}
+    {% endif %}
+{% endblock  %}

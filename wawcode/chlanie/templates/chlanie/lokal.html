@@ -32,7 +32,11 @@
 
         <h1>
             <strong>{{ lokal.nazwa }}</strong>
+            {% if is_fav %}
+            <a><i id="heart" class="material-icons">favorite</i></a>
+            {% else %}
             <a><i id="heart" class="material-icons">favorite_border</i></a>
+            {% endif %}
             <script type="text/javascript">
                 var username = "{{ request.user.username }}";
                 let heart = $("#heart")
@@ -42,8 +46,11 @@
                         url: '{% url "chlanie:favourite" %}',
                         data: {
                             'username': username,
-                            'idLokalu': lokal.id,
-                            'fav': true
+                            'idLokalu': {{lokal.id}},
+                            'fav': true,
+                        },
+                        success: function(data) {
+                            location.reload();
                         }
                     })
                 })
