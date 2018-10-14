@@ -121,7 +121,7 @@
 						<label><input type="checkbox" id="{{ form.parkiet.id_for_label }}" name="{{ form.parkiet.html_name }}"> Parkiet </label>
 					</div>
 					<div class="checkbox">
-						<label><input type="checkbox" id="{{ form.mecze.id_for_label }}" name="{{ form.mecze.html_name }}"> Transmisja meczy </label>
+						<label><input type="checkbox" id="{{ form.mecze.id_for_label }}" name="{{ form.mecze.html_name }}"> Transmisja meczów </label>
 					</div>
 				</div>
 			</form>
@@ -134,7 +134,7 @@
 	function rozwin(x) {
 		x.classList.toggle("change");
 		if(!gowno){
-			document.getElementById('formularz-na-mapie').style.height="60%";
+			document.getElementById('formularz-na-mapie').style.height=screen.height*0.55+"px";
 			document.getElementById('checkboxy').style.display="inline-block";
 			gowno = true;
 		}
