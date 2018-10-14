@@ -162,6 +162,16 @@ def rate(request):
     return JsonResponse(True, safe=False)
 
 
+def comment(request):
+    data = request.GET.dict()
+    text = data['komentarz']
+    lokal_id = data['idLokalu']
+    lokal = Lokal.objects.get(id=lokal_id)
+    username = data['username']
+    user = User.objects.get(username=username)
+    Comment.objects.create(lokal=lokal, user=user, text=text)
+
+
 def logout_view(request):
     logout(request)
     context = {}
