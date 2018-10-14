@@ -13,6 +13,7 @@ def address_to_coordinates(adress: str):
 
 def get_places_within_radius(lokale, user_coordinates, radius):
     for lokal in lokale:
+        print(lokal.coordinates)
         dist = calculate_distance(lokal.coordinates, user_coordinates)
         if dist > radius:
             lokale = lokale.exclude(id=lokal.pk)
