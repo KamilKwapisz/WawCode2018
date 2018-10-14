@@ -102,6 +102,7 @@ class LokalCreateView(CreateView):
         'parkiet',
         'mecze',
     ]
+    # success_url = reverse_lazy('chlanie:detail'),}
 
     def form_valid(self, form):
         if form.is_valid():
@@ -123,7 +124,10 @@ def get_lokals_list(request):
     print(data)
     # user_coordinates = data['coordinates']
     user_coordinates = "[52.220116, 21.012091]"
-    radius = int(data['promien'])
+    try:
+        radius = int(data['promien'])
+    except Exception:
+        radius = 20
     for key, value in data.items():
         if value == 'true':
             data[key] = True
@@ -142,6 +146,7 @@ def get_lokals_list(request):
 
     print(lokale)
     json_data = serializers.serialize('json', list(lokale))
+    print(json_data)
     return JsonResponse(json_data, safe=False)
 
 
