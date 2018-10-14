@@ -8,12 +8,14 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{% static 'chlanie/css/mdb.min.css' %}">
     <link rel="stylesheet" href="{% static 'chlanie/themes/bootstrap-stars.css' %}">
+    <link rel="stylesheet" href="{% static 'chlanie/css/mdb.min.css' %}">
     <link rel="stylesheet" href="{% static 'chlanie/css/mainpage.css' %}">
 
     <!-- material icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Latest compiled and minified JavaScript -->
+    <link href="{% static 'chlanie/main.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -88,6 +90,7 @@
 
 {% endblock %}
 </body>
+<script src="{% static 'chlanie/js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'chlanie/js/mdb.min.js' %}"></script>
 <script src="{% static 'chlanie/js/popper.min.js' %}"></script>
 <script>
@@ -103,6 +106,14 @@
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
         document.getElementById("formularz-na-mapie").style.marginLeft = "0px";
+    }
+
+    function openNav2() {
+        document.getElementById("mySidenav2").style.width = "250px";
+    }
+
+    function closeNav2() {
+        document.getElementById("mySidenav2").style.width = "0";
     }
 </script>
 {% block script %}

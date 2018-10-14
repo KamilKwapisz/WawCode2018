@@ -2,136 +2,110 @@
 {% block body %}
 
     <div class="container">
-        <div class="row">
-            <div class="alert alert-danger" role="alert" style="display: none">
-                Już oceniłeś lokal!
-            </div>
+    <div class="row">
+        <div class="alert alert-danger" role="alert" style="display: none">
+            Już oceniłeś lokal!
         </div>
+    </div>
 
-        <div class="row">
-            <div class="alert alert-success" role="success" style="display: none">
-                Dziękujemy za ocenę!
-            </div>
+    <div class="row">
+        <div class="alert alert-success" role="success" style="display: none">
+            Dziękujemy za ocenę!
         </div>
+    </div>
 
-        <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
-            <div class="row">
-    			<div class="receipt-header">
-					<div class="col-xs-6 col-sm-6 col-md-6">
-						<div class="receipt-left">
-							<img class="img-responsive" alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" style="width: 142px; border-radius: 86px;">
-						</div>
-					</div>
-				</div>
-        </div>
-
-
-        <div class="row">
-
-            <h1>
-                <strong>{{ lokal.nazwa }}</strong>
-                <a><i class="heart material-icons">favorite_border</i></a>
-                <script type="text/javascript">
-                    var username = "{{ request.user.username }}";
-                    let heart = $("#heart")
-                    window.onload = function () {
-                        var liked = 0;
-                        if (liked) {
-                            $("#heart").innerHTML = "favorite";
-                        }
-                    }
-                    heart.click(() => {
-                        console.log("aaa");
-                        var fav = True;
-                        if (liked) {
-                            fav = False
-                        }
-                        $.ajax({
-                            type: "GET",
-                            url: '{% url "chlanie:favourite" %}',
-                            data: {
-                                'username': username,
-                                'idLokalu': lokal.id,
-                                'fav': fav
-                            }
-                        })
-                    })
-                </script>
-            </h1>
-
-            <div class="row container">
-                <div class="col">
-                    <select id="starRating">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    <div class="col">({{ rating }})</div>
-
-                    <script type="text/javascript">
-                        var username = "{{ request.user.username }}";
-                        let options = {
-                            theme: 'bootstrap-stars',
-                            initialRating: {{rating}},
-                            onSelect: function (value, text, event) {
-                                if (typeof(event) !== 'undefined') {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: '{% url "chlanie:rating" %}',
-                                        data: {
-                                            'username': username,
-                                            'idLokalu': {{lokal.id}},
-                                            'ocena': value
-                                        }
-                                    })
-                                } else console.log("dziwne")
-                            }
-                        }
-                        $('#starRating').barrating('show', options);
-
-                    </script>
+    <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+    <div class="row">
+        <div class="receipt-header">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="receipt-left">
+                    <img class="img-responsive" alt="iamgurdeeposahan"
+                         src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg"
+                         style="width: 142px; border-radius: 86px;">
                 </div>
             </div>
-            <h1>
-                <small class="text-muted">{{ lokal.adres }}</small>
-            </h1>
         </div>
+    </div>
 
-        <!-- icons -->
-        <div class="row">
-            {% for key, value in info %}
-                {% if value == True %}
-                    <i class="material-icons">{{ key }}</i>
-                {% endif %}
-            {% endfor %}
+
+    <div class="row">
+
+        <h1>
+            <strong>{{ lokal.nazwa }}</strong>
+            {% if is_fav %}
+                <a><i id="heart" class="material-icons">favorite</i></a>
+            {% else %}
+                <a><i id="heart" class="material-icons">favorite_border</i></a>
+            {% endif %}
+            <script type="text/javascript">
+                var username = "{{ request.user.username }}";
+                let heart = $("#heart")
+                heart.click(() => {
+                    $.ajax({
+                        type: "GET",
+                        url: '{% url "chlanie:favourite" %}',
+                        data: {
+                            'username': username,
+                            'idLokalu': {{lokal.id}},
+                            'fav': true,
+                        },
+                        success: function (data) {
+                            location.reload();
+                        }
+                    })
+                })
+            </script>
+        </h1>
+
+        <div class="row container">
+            <div class="col">
+                <select id="starRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <div class="col">({{ rating }})</div>
+
+                <script type="text/javascript">
+                    var username = "{{ request.user.username }}";
+                    let options = {
+                        theme: 'bootstrap-stars',
+                        initialRating: {{rating}},
+                        onSelect: function (value, text, event) {
+                            if (typeof(event) !== 'undefined') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: '{% url "chlanie:rating" %}',
+                                    data: {
+                                        'username': username,
+                                        'idLokalu': {{lokal.id}},
+                                        'ocena': value
+                                    }
+                                })
+                            } else console.log("dziwne")
+                        }
+                    }
+                    $('#starRating').barrating('show', options);
+
+                </script>
+            </div>
         </div>
+        <h1>
+            <small class="text-muted">{{ lokal.adres }}</small>
+        </h1>
+    </div>
 
-        <div class="row">
-            <table>
-                <tr>
-                    <td class="text-primary">Cena wódki:</td>
-                    <td>{{ lokal.cenaWodki }}</td>
-                </tr>
-                <tr>
-                    <td class="text-xl-left text-primary">Cena piwa:</td>
-                    <td>{{ lokal.cenaPiwa }}</td>
-                </tr>
-            </table>
-        </div>
+    <!-- icons -->
+    <div class="row">
+        {% for key, value in info %}
+            {% if value == True %}
+                <i class="material-icons">{{ key }}</i>
+            {% endif %}
+        {% endfor %}
+    </div>
 
-        <div class="row">
-            Komentarze: </br>
-            {% if comments %}
-                {% for comment in comments %}
-                    <div class="media d-block d-md-flex mt-4">
-                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                            <h5 class="font-weight-bold mt-0">
-                                <a href="">{{ comment.author }}</a>
-                                <a href="" class="pull-right">
-                                    <i class="fa fa-reply"></i>
-                                </a>
     <div class="row">
         <table>
             <tr>
@@ -144,56 +118,86 @@
             </tr>
         </table>
     </div>
-    {% if is_owner %}
-    owner
-    {% endif %}
-    <div class="row">
-        Rezerwacja baru:
-        <div class="col-md-12">
-            <button class="btn btn-secondary" data-target=".bd-example-modal-sm" data-toggle="modal" type="button">
-                Rezerwuj
-            </button>
-            <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm"
-                 role="dialog" tabindex="-1">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
-                                <b>Rezerwacja stolika</b>
-                            </h5>
-                            {{ comment.text }}
-                        </div>
-                    </div>
-                {% endfor %}
-                </ul>
-            {% else %}
-                brak</br>
-            {% endif %}
-            Dodaj komentarz:
-            <form method="post">
-                {% csrf_token %}
-                <input id="addComment" class="form-control" id="{{ form.text.id_for_label }}" placeholder="Treść komentarza" type="text"
-                       name="{{ form.text.html_name }}">
-                {#                <div class="col-md-16 text-center">#}
-                <a id="send"><i class="material-icons">send</i></a>
-                {#                </div>#}
-            </form>
 
-            <script>
-                $("#send").click((ev) => {
+    <div class="row">
+        Komentarze: </br>
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="media d-block d-md-flex mt-4">
+                    <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                        <h5 class="font-weight-bold mt-0">
+                            <a href="">{{ comment.author }}</a>
+                            <a href="" class="pull-right">
+                                <i class="fa fa-reply"></i>
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+                </div>
+
+                <div class="row">
+                    <table>
+                        <tr>
+                            <td class="text-primary">Cena wódki:</td>
+                            <td>{{ lokal.cenaWodki }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-xl-left text-primary">Cena piwa:</td>
+                            <td>{{ lokal.cenaPiwa }}</td>
+                        </tr>
+                    </table>
+                </div>
+                {% if is_owner %}
+                    owner
+                {% endif %}
+                <div class="row">
+                Rezerwacja baru:
+                <div class="col-md-12">
+                <button class="btn btn-secondary" data-target=".bd-example-modal-sm" data-toggle="modal" type="button">
+                    Rezerwuj
+                </button>
+                <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm"
+                     role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <b>Rezerwacja stolika</b>
+                        </h5>
+                        {{ comment.text }}
+                    </div>
+                </div>
+            {% endfor %}
+            </ul>
+        {% else %}
+            brak</br>
+        {% endif %}
+        Dodaj komentarz:
+        <form method="post">
+            {% csrf_token %}
+            <input id="addComment" class="form-control" id="{{ form.text.id_for_label }}" placeholder="Treść komentarza"
+                   type="text"
+                   name="{{ form.text.html_name }}">
+            {#                <div class="col-md-16 text-center">#}
+            <a id="send"><i class="material-icons">send</i></a>
+            {#                </div>#}
+        </form>
+
+        <script>
+            $("#send").click((ev) => {
                     let comment = $("#addComment").value;
-                        $.ajax({
-                            type: "GET",
-                            url: '{% url "chlanie:comment" %}',
-                            data: {
-                                'username': username,
-                                'idLokalu': {{lokal.id}},
-                                'komentarz': comment
-                            }
-                        });
-                    }
-                );
-            </script>
+                    $.ajax({
+                        type: "GET",
+                        url: '{% url "chlanie:comment" %}',
+                        data: {
+                            'username': username,
+                            'idLokalu': {{lokal.id}},
+                            'komentarz': comment
+                        }
+                    });
+                }
+            );
+        </script>
         </div>
-    </div>
+        </div>
 {% endblock %}

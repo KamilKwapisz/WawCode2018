@@ -1,0 +1,27 @@
+{% extends 'chlanie/base.html' %}
+{% block body %}
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+            <div class="list-group">
+                <h1 class="list-group-item list-group-item-action bg-secondary">
+                    Ulubione lokale:
+                </h1>
+                {% if lokale %}
+                    {% for lokal in lokale %}
+                        <a class="list-group-item list-group-item-action"
+                           href="{% url 'chlanie:lokal-detail' pk=lokal.pk%}">
+                            <i class="material-icons">favorite</i>
+                            <strong>{{ lokal.nazwa }}</strong>
+                            <span class="text-muted">
+                            - {{ lokal.adres }}
+                        </span>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
