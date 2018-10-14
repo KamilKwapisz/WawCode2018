@@ -41,18 +41,19 @@
                         }
                     }
                     heart.click(() => {
+                        console.log("aaa");
                         var fav = True;
                         if (liked) {
                             fav = False
                         }
                         $.ajax({
                             type: "GET",
-                            url: '{% url "chlanie:lokale" %}',
-                            data: JSON.stringify({
+                            url: '{% url "chlanie:favourite" %}',
+                            data: {
                                 'username': username,
                                 'idLokalu': lokal.id,
                                 'fav': fav
-                            })
+                            }
                         })
                     })
                 </script>
@@ -89,6 +90,7 @@
                             }
                         }
                         $('#starRating').barrating('show', options);
+
                     </script>
                 </div>
             </div>
