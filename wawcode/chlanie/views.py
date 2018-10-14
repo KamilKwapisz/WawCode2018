@@ -144,7 +144,6 @@ def get_lokals_list(request):
     if 'cenaWodki' in data.keys():
         lokale = lokale.filter(cenaWodki__lte=float(data['cenaWodki']))
     lokale = get_places_within_radius(lokale, user_coordinates, radius)
-
     print(lokale)
     json_data = serializers.serialize('json', list(lokale))
     print(json_data)
