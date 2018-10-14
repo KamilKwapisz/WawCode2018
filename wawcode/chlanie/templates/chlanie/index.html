@@ -200,15 +200,7 @@
                         url: '{% url "chlanie:lokale" %}',
                         data: paramObj,
                         success: function (response) {
-                            response = JSON.parse(response);
-                            //console.log(response)
-                            for(var i = 0; i < response.length; i++){
-                                var lokal = response[i];
-                                var link = document.createElement("a");
-                                var text = document.createTextNode(lokal['fields']['nazwa']);
-                                link.appendChild(text);
-                                $("#mySidenav2").append(link);
-                            }
+                            console.log(response)
                         },
                         error: function (err) {
                             console.log("error " + err.message)
@@ -406,6 +398,38 @@
 {% block sidenav2 %}
 <div id="mySidenav2" class="sidenav2">
   <a href="javascript:void(0)" class="closebtn2" onclick="closeNav2()">&times;</a>
+  <div style="height: 60px; background-color: rgb(255, 255, 255); padding-left: 7.5px; padding-right: 7.5px;">
+    <div style="flex-grow: 1; height: 60px; border-bottom: 1px solid rgb(170, 170, 170); cursor: pointer;">
+      <div style="display: flex; flex-direction: row; align-items: center; height: 30px; padding-top: 2px;">
+        <div style="font-family: BebasNeue, bebas_neueregular; font-size: 20px; color: rgb(87, 87, 87); flex-grow: 1; margin-top: 25px;">ATRANS - HOTEL WARSZAWA </div>
+        <div style="font-family: HelveticaNeue-Regular, &quot;Helvetica Neue Regular&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 15px; color: rgb(87, 87, 87);margin-top: 25px;">za darmo</div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 60px; background-color: rgb(255, 255, 255); padding-left: 7.5px; padding-right: 7.5px;">
+    <div style="flex-grow: 1; height: 60px; border-bottom: 1px solid rgb(170, 170, 170); cursor: pointer;">
+      <div style="display: flex; flex-direction: row; align-items: center; height: 30px; padding-top: 2px;">
+        <div style="font-family: BebasNeue, bebas_neueregular; font-size: 20px; color: rgb(87, 87, 87); flex-grow: 1; margin-top: 25px;">ATRANS - HOTEL WARSZAWA </div>
+        <div style="font-family: HelveticaNeue-Regular, &quot;Helvetica Neue Regular&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 15px; color: rgb(87, 87, 87);margin-top: 25px;">za darmo</div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 60px; background-color: rgb(255, 255, 255); padding-left: 7.5px; padding-right: 7.5px;">
+    <div style="flex-grow: 1; height: 60px; border-bottom: 1px solid rgb(170, 170, 170); cursor: pointer;">
+      <div style="display: flex; flex-direction: row; align-items: center; height: 30px; padding-top: 2px;">
+        <div style="font-family: BebasNeue, bebas_neueregular; font-size: 20px; color: rgb(87, 87, 87); flex-grow: 1; margin-top: 25px;">ATRANS - HOTEL WARSZAWA </div>
+        <div style="font-family: HelveticaNeue-Regular, &quot;Helvetica Neue Regular&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 15px; color: rgb(87, 87, 87);margin-top: 25px;">za darmo</div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 60px; background-color: rgb(255, 255, 255); padding-left: 7.5px; padding-right: 7.5px;">
+    <div style="flex-grow: 1; height: 60px; border-bottom: 1px solid rgb(170, 170, 170); cursor: pointer;">
+      <div style="display: flex; flex-direction: row; align-items: center; height: 30px; padding-top: 2px;">
+        <div style="font-family: BebasNeue, bebas_neueregular; font-size: 20px; color: rgb(87, 87, 87); flex-grow: 1; margin-top: 25px;">ATRANS - HOTEL WARSZAWA </div>
+        <div style="font-family: HelveticaNeue-Regular, &quot;Helvetica Neue Regular&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 15px; color: rgb(87, 87, 87);margin-top: 25px;">za darmo</div>
+      </div>
+    </div>
+  </div>
   <div style="height: 60px; background-color: rgb(255, 255, 255); padding-left: 7.5px; padding-right: 7.5px;">
     <div style="flex-grow: 1; height: 60px; border-bottom: 1px solid rgb(170, 170, 170); cursor: pointer;">
       <div style="display: flex; flex-direction: row; align-items: center; height: 30px; padding-top: 2px;">
