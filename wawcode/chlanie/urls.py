@@ -17,4 +17,5 @@ urlpatterns = [
     path('ajax/lokale', views.get_lokals_list, name='lokale'),
     path('ajax/rating', views.rate, name='rating'),
     path('ajax/comment', views.comment, name='comment'),
+    path('ajax/reservation', views.reservation, name='reservation'),
 ]

@@ -13,7 +13,7 @@ from django.views.decorators.debug import sensitive_variables, sensitive_post_pa
 from django.utils.decorators import method_decorator
 import json
 
-from .models import Lokal, Comment, Rate, Like
+from .models import Lokal, Comment, Rate, Like, Reservation
 from .forms import UserForm, CommentForm
 from .utils import *
 
@@ -170,6 +170,20 @@ def comment(request):
     username = data['username']
     user = User.objects.get(username=username)
     Comment.objects.create(lokal=lokal, user=user, text=text)
+
+
+def reservation(request):
+    data = request.GET.dict()
+    username = data['username']
+    lokal_id = data['idLokalu']
+    table_type = data['stolik']
+    date = data['data_rezerwacji']
+    user = User.objects.get(username=username)
+    lokal = Lokal.objects.get(id=lokal_id)
+    Reservation.objects.create(user=user, lokal=lokal,
+                               table_type=table_type, date=date)
+    return JsonResponse(f"Rezerwacja {table_type} osobowego stolika na {date} została pomyślnie zapisana", safe=False)
+
 
 
 def logout_view(request):
