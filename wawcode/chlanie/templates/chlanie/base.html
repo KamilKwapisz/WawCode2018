@@ -57,7 +57,7 @@
           <li class="active"><a href="/lokal/dodaj">Dodaj lokal</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><span class="glyphicon glyphicon-log-in"></span></li>
+          <li><a>{{ request.user.username }}</a></li>
           {% block button %}
 
           {% endblock %}
