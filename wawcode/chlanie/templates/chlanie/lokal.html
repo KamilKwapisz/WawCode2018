@@ -157,9 +157,33 @@
                                     </option>
                                 </select>
                             </form>
+                            <script type="text/javascript">
+                                var table = $("#stolik").value;
+                                var data_rezerwacji = $("#data_rezerwacji").value;
+                                $("#reservation_button").click(function(e) {
+                                    console.log("aaa");
+                                    console.log(table);
+                                    console.log(data_rezerwacji);
+                                    e.preventDefault();
+                                    $.ajax({
+                                        type: "GET",
+                                         url: '{% url "chlanie:reservation" %}',
+                                        data: {
+                                                'username': username,
+                                                'idLokalu': {{lokal.id}},
+                                                'stolik': table,
+                                                'data_rezerwacji': data_rezerwacji
+                                         },
+                                        success: function(data) {
+                                            var msg = data.msg;
+                                           alert(msg);
+                                        },
+                                    });
+                                });
+                                 </script>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary" type="button">Rezerwuj!</button>
+                            <button class="btn btn-primary" id="reservation_button" type="button">Rezerwuj!</button>
                         </div>
                     </div>
                 </div>

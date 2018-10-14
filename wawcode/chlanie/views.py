@@ -182,7 +182,9 @@ def reservation(request):
     lokal = Lokal.objects.get(id=lokal_id)
     Reservation.objects.create(user=user, lokal=lokal,
                                table_type=table_type, date=date)
-    return JsonResponse(f"Rezerwacja {table_type} osobowego stolika na {date} została pomyślnie zapisana", safe=False)
+    msg = f"Rezerwacja {table_type} osobowego stolika na {date} została pomyślnie zapisana"
+    print(msg)
+    return JsonResponse({'msg': msg}, safe=False)
 
 
 
