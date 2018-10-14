@@ -28,6 +28,7 @@ class Lokal(models.Model):
     parkiet = models.BooleanField(default=False)
     mecze = models.BooleanField(default=False)
     jaki_mecz = models.CharField(max_length=200, blank=True, null=True)
+    owner = models.CharField(max_length=100, default="admin")
 
     def __str__(self):
         return str(self.nazwa)
@@ -63,7 +64,7 @@ class Comment(models.Model):
         return super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.author)
 
 
 class Reservation(models.Model):
@@ -76,11 +77,13 @@ class Reservation(models.Model):
         return str(self.table_type + " " + self.lokal.nazwa + " " + self.user.username)
 
 
-class WydarzenieLokalu(models.Model):
+class Offer(models.Model):
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
-    tytul = models.CharField(max_length=40)
-    opis = models.CharField(max_length=100)
-    godzinaOd = models.DateTimeField()
+    text = models.CharField(max_length=100)
+    cenaPiwa = models.FloatField()
+    cenaWodki = models.FloatField()
+    text = models.CharField(max_length=100)
+    data = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return str(self.tytul)

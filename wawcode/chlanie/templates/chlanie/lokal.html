@@ -120,6 +120,7 @@
         </div>
 
 
+<<<<<<< HEAD
         <div class="row">
             Komentarze: </br>
             {% if comments %}
@@ -131,6 +132,36 @@
                                 <a href="" class="pull-right">
                                     <i class="fa fa-reply"></i>
                                 </a>
+=======
+    <div class="row">
+        <table>
+            <tr>
+                <td class="text-primary">Cena wódki:</td>
+                <td>{{ lokal.cenaWodki }}</td>
+            </tr>
+            <tr>
+                <td class="text-xl-left text-primary">Cena piwa:</td>
+                <td>{{ lokal.cenaPiwa }}</td>
+            </tr>
+        </table>
+    </div>
+    {% if is_owner %}
+    owner
+    {% endif %}
+    <div class="row">
+        Rezerwacja baru:
+        <div class="col-md-12">
+            <button class="btn btn-secondary" data-target=".bd-example-modal-sm" data-toggle="modal" type="button">
+                Rezerwuj
+            </button>
+            <div aria-hidden="true" aria-labelledby="mySmallModalLabel" class="modal fade bd-example-modal-sm"
+                 role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                <b>Rezerwacja stolika</b>
+>>>>>>> 0d80a2c53eeb1d547075c19690ef694d3b81c86f
                             </h5>
                             {{ comment.text }}
                         </div>
