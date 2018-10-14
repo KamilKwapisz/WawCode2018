@@ -12,18 +12,6 @@ class Profile(models.Model):
         return str(self.user.username)
 
 
-class UserEvent(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tytul = models.CharField(max_length=40)
-    opis = models.CharField(max_length=100)
-    lokalizacjaNS = models.FloatField()
-    lokalizacjaWE = models.FloatField()
-    dataOd = models.DateTimeField()
-
-    def __str__(self):
-        return str(self.tytul)
-
-
 class Lokal(models.Model):
     nazwa = models.CharField(max_length=40)
     adres = models.CharField(max_length=200)
@@ -76,6 +64,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class Reservation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
+    table_type = models.PositiveSmallIntegerField(default=3)
+    date = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.table_type + " " + self.lokal.nazwa + " " + self.user.username)
 
 
 class WydarzenieLokalu(models.Model):
