@@ -84,7 +84,7 @@
                         data: paramObj,
                         success: function (response) {
                             response = JSON.parse(response);
-                            $("#wyniki")
+                            $("#wyniki").empty()
                             //console.log(response)
                             for (var i = 0; i < response.length; i++) {
                                 var pk = response[i]['pk'];
