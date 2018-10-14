@@ -1,8 +1,159 @@
 {% extends 'chlanie/base.html' %}
 {% block body %}
 
-Nazwa: {{lokal.nazwa}}</br>
-Adres: {{lokal.adres}}</br>
-coordinates: {{coords}}</br>
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-danger" role="alert" style="display: none">
+                Już oceniłeś lokal!
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="alert alert-success" role="success" style="display: none">
+                Dziękujemy za ocenę!
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <h1>
+                <strong>{{ lokal.nazwa }}</strong>
+                <a><i class="heart material-icons">favorite_border</i></a>
+                <script type="text/javascript">
+                    var username = "{{ request.user.username }}";
+                    let heart = $("#heart")
+                    window.onload = function () {
+                        var liked = 0;
+                        if (liked) {
+                            $("#heart").innerHTML = "favorite";
+                        }
+                    }
+                    heart.click(() => {
+                        var fav = True;
+                        if (liked) {
+                            fav = False
+                        }
+                        $.ajax({
+                            type: "GET",
+                            url: '{% url "chlanie:lokale" %}',
+                            data: JSON.stringify({
+                                'username': username,
+                                'idLokalu': lokal.id,
+                                'fav': fav
+                            })
+                        })
+                    })
+                </script>
+            </h1>
+
+            <div class="row container">
+                <div class="col">
+                    <select id="starRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="col">({{ rating }})</div>
+
+                    <script type="text/javascript">
+                        var username = "{{ request.user.username }}";
+                        let options = {
+                            theme: 'bootstrap-stars',
+                            initialRating: {{rating}},
+                            onSelect: function (value, text, event) {
+                                if (typeof(event) !== 'undefined') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: '{% url "chlanie:rating" %}',
+                                        data: {
+                                            'username': username,
+                                            'idLokalu': {{lokal.id}},
+                                            'ocena': value
+                                        }
+                                    })
+                                } else console.log("dziwne")
+                            }
+                        }
+                        $('#starRating').barrating('show', options);
+                    </script>
+                </div>
+            </div>
+            <h1>
+                <small class="text-muted">{{ lokal.adres }}</small>
+            </h1>
+        </div>
+
+        <!-- icons -->
+        <div class="row">
+            {% for key, value in info %}
+                {% if value == True %}
+                    <i class="material-icons">{{ key }}</i>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <table>
+                <tr>
+                    <td class="text-primary">Cena wódki:</td>
+                    <td>{{ lokal.cenaWodki }}</td>
+                </tr>
+                <tr>
+                    <td class="text-xl-left text-primary">Cena piwa:</td>
+                    <td>{{ lokal.cenaPiwa }}</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="row">
+            Komentarze: </br>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="media d-block d-md-flex mt-4">
+                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                            <h5 class="font-weight-bold mt-0">
+                                <a href="">{{ comment.author }}</a>
+                                <a href="" class="pull-right">
+                                    <i class="fa fa-reply"></i>
+                                </a>
+                            </h5>
+                            {{ comment.text }}
+                        </div>
+                    </div>
+                {% endfor %}
+                </ul>
+            {% else %}
+                brak</br>
+            {% endif %}
+            Dodaj komentarz:
+            <form method="post">
+                {% csrf_token %}
+                <input id="addComment" class="form-control" id="{{ form.text.id_for_label }}" placeholder="Treść komentarza" type="text"
+                       name="{{ form.text.html_name }}">
+                {#                <div class="col-md-16 text-center">#}
+                <a id="send"><i class="material-icons">send</i></a>
+                {#                </div>#}
+            </form>
+
+            <script>
+                $("#send").click((ev) => {
+                    let comment = $("#addComment").value;
+                        $.ajax({
+                            type: "GET",
+                            url: '{% url "chlanie:comment" %}',
+                            data: {
+                                'username': username,
+                                'idLokalu': {{lokal.id}},
+                                'komentarz': comment
+                            }
+                        });
+                    }
+                );
+            </script>
+        </div>
+    </div>
 {% endblock %}

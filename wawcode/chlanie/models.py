@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Profile(models.Model):
@@ -46,14 +48,34 @@ class Lokal(models.Model):
         return reverse('chlanie:lokal-detail', kwargs={'pk': self.id})
 
 
-class Komentarz(models.Model):
-    nick = models.ForeignKey(User, on_delete=models.CASCADE)
+class Rate(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
-    tekst = models.CharField(max_length=100)
-    ileGwiazdek = models.IntegerField()
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    created = models.DateTimeField(editable=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Rate, self).save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.nick)
+        return f"{self.user} ocenił lokal {self.lokal.nazwa} na {self.rating} gwiazdek"
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
+    text = models.CharField(max_length=100)
+    created = models.DateTimeField(editable=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Comment, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.user)
 
 
 class WydarzenieLokalu(models.Model):
@@ -66,12 +88,18 @@ class WydarzenieLokalu(models.Model):
         return str(self.tytul)
 
 
-class Polubienie(models.Model):
+class Like(models.Model):
     lokal = models.ForeignKey(Lokal, on_delete=models.CASCADE)
-    nick = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(editable=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.nick} polubił {self.lokal}"
+        return f"{self.user} polubił {self.lokal}"
 
 
 class Wlasciciel(models.Model):

@@ -6,9 +6,8 @@ app_name = 'chlanie'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('lokal/dodaj', views.LokalCreateView.as_view(), name='lokal-create'),
-    path('lokal/<int:pk>', views.LokalDetailView.as_view(), name='lokal-detail'),
-    path('test/', views.sample_query, name='test'),
+    path('lokal/dodaj/', views.LokalCreateView.as_view(), name='lokal-create'),
+    path('lokal/<int:pk>', views.lokal_detail_view, name='lokal-detail'),
     path('search/', views.search_test, name='search'),
     path('profile/', views.profile, name='profile'),
     path('register/', views.RegisterView.as_view(), name='register'),
@@ -16,4 +15,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
 
     path('ajax/lokale', views.get_lokals_list, name='lokale'),
+    path('ajax/rating', views.rate, name='rating'),
 ]
