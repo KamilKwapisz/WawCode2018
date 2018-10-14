@@ -2,6 +2,7 @@ from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import View, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -48,17 +49,22 @@ def lokal_detail_view(request, pk):
 
     comments = Comment.objects.filter(lokal=lokal.id)
 
+    was_rated = False
+    if Rate.objects.filter(user=user, lokal=lokal):
+        was_rated = True
     rates = Rate.objects.filter(lokal=lokal.id)
     rating = 0.0
     for rate in rates:
         rating += rate.rating
     try:
         rating /= rates.count()
+        rating = float("%.2f" % rating)
     except ZeroDivisionError:
-        rating = None
+        rating = 0
 
     context = dict(lokal=lokal, info=info, comments=comments)
     context['rating'] = rating
+    context['was_rated'] = was_rated
 
     if Like.objects.filter(user=user, lokal=lokal).count() == 1:
         context['liked'] = True
@@ -108,42 +114,52 @@ class LokalCreateView(CreateView):
             messages.error("Invalid form")
 
 
-def sample_query(request):
-    lokale = Lokal.objects.all()
-    user_location = "[52.217719, 20.991137]"
-    radius = 1.0
-    for lokal in lokale:
-        dist = calculate_distance(lokal.coordinates, user_location)
-        print(dist)
-        if dist > radius:
-            lokale = lokale.exclude(id=lokal.pk)
-
-    context = dict(lokale=lokale)
-    return render(request, 'chlanie/lokal_list.html', context)
-
-
 def search_test(request):
     return render(request, 'chlanie/searchtest.html', {})
 
 
 def get_lokals_list(request):
     data = request.GET.dict()
+    user_coordinates = data['coordinates']
+    radius = data['promien']
     for key, value in data.items():
         if value == 'true':
             data[key] = True
         elif value == 'false':
             data[key] = False
-    print(data)
-    data_without_prices = {k: v for k, v in data.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('cenaPiwa', 'cenaWodki')}
+    data_without_prices = {k: v for k, v in data_without_prices.items() if k not in ('coordinates', 'promien')}
     lokale = Lokal.objects.filter(**data_without_prices)
     if 'cenaPiwa' in data.keys():
         lokale = lokale.filter(cenaPiwa__lte=data['cenaPiwa'])
     if 'cenaWodki' in data.keys():
         lokale = lokale.filter(cenaWodki__lte=data['cenaWodki'])
+    lokale = get_places_within_radius(lokale, user_coordinates, radius)
 
     print(lokale)
     json_data = serializers.serialize('json', list(lokale))
     return JsonResponse(json_data, safe=False)
+
+
+def rate(request):
+    data = request.GET.dict()
+    rating = int(data['ocena'])
+    lokal_id = data['idLokalu']
+    username = data['username']
+    user = User.objects.get(username=username)
+    lokal = Lokal.objects.get(id=lokal_id)
+    rate_query = Rate.objects.filter(user=user, lokal=lokal)
+    if rate_query.count() == 1:
+        old_rate = Rate.objects.get(user=user, lokal=lokal)
+        if old_rate.rating == rating:
+            old_rate.rating = 0
+        else:
+            old_rate.rating = rating
+        old_rate.save()
+
+    else:
+        Rate.objects.create(user=user, lokal=lokal, rating=rating)
+    return JsonResponse(True, safe=False)
 
 
 def logout_view(request):

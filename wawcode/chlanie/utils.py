@@ -11,6 +11,14 @@ def address_to_coordinates(adress: str):
     return tuple(cords)
 
 
+def get_places_within_radius(lokale, user_coordinates, radius):
+    for lokal in lokale:
+        dist = calculate_distance(lokal.coordinates, user_coordinates)
+        if dist > radius:
+            lokale = lokale.exclude(id=lokal.pk)
+    return lokale
+
+
 def calculate_distance(coordinates1, coordinates2):
     print(coordinates1)
     print(coordinates2)
